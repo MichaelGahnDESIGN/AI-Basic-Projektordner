@@ -60,3 +60,19 @@ Startversion dieser Vorlage pro neuem Projekt:
 - Rücknahme oder Wiederherstellung: Über Git-Diff nachvollziehbar. Gelöschte
   lokale Abhängigkeiten können mit `npm --prefix DEMOS/OPENROUTER install`
   erneut erzeugt werden.
+
+## 1.0.1 - Öffentliche GitHub-Vorlage
+
+- Datum: `2026-06-07`
+- Version: `1.0.1`
+- Beschreibung: Die Vorlage wurde für die öffentliche Bereitstellung als
+  GitHub-Repository vorbereitet. Ergänzt wurden `README.md`, `LICENSE`,
+  `CHANGELOG.md`, `VERSION`, GitHub-Workflow, Release-Konfiguration und
+  Issue-Vorlagen. Lokale absolute Beispielpfade wurden entfernt.
+- Begründung: Die Ordnerstruktur soll allgemein verständlich, herunterladbar
+  und ohne private lokale Pfade als Vorlage nutzbar sein.
+- Betroffene Bereiche: Root-Dateien, `.github/`, `DOKUMENTATION/`,
+  `VORLAGE/AI/SKILLS/`, Dokumentationsgenerator.
+- Rücknahme oder Wiederherstellung: Über Git-Diff nachvollziehbar. Die
+  GitHub-spezifischen Dateien können entfernt werden, wenn die Vorlage nicht
+  öffentlich bereitgestellt werden soll.

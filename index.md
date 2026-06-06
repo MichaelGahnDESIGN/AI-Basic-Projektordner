@@ -7,6 +7,10 @@ Claude Cowork und ChatGPT Codex.
 
 Im Root liegen bewusst nur diese sichtbaren Dateien:
 
+- `README.md`: öffentliche GitHub-Erklärung für Menschen.
+- `LICENSE`: Lizenz der Vorlage.
+- `CHANGELOG.md`: öffentlicher Änderungsverlauf.
+- `VERSION`: aktuelle Vorlagenversion.
 - `index.md`: menschlicher Startpunkt.
 - `claude.md`: Startpunkt für Claude Code und Claude Cowork.
 - `AGENTS.md`: Startpunkt für ChatGPT Codex.
@@ -17,7 +21,7 @@ Root bleiben, weil sie von den jeweiligen Werkzeugen erwartet werden.
 ## Ordnerstruktur
 
 - `VORLAGE/`: Regeln, Agenten, Skills, Tooling-Dokumentation und historische
-  Vorlagenentscheidungen.
+  Vorlagenlogik.
 - `PROJEKT/WORKSPACE/`: konkreter Projektcode, Assets und technische Dateien.
 - `DOKUMENTATION/`: Vorlagen- und Entwicklungsdokumentation.
 - `BACKUPS/`: lokale Sicherungen und Wiederherstellungsgrundlagen.

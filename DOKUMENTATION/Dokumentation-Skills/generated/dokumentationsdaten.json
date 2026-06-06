@@ -1,8 +1,8 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-06-07T01:16:06+02:00",
-  "projectRoot": "/Volumes/AI-Workspace/Coding Sandbox/Claude-Codex-MCP",
-  "documentationRoot": "/Volumes/AI-Workspace/Coding Sandbox/Claude-Codex-MCP/DOKUMENTATION",
+  "generatedAt": "2026-06-07T01:34:08+02:00",
+  "projectRoot": ".",
+  "documentationRoot": "DOKUMENTATION",
   "tabs": {
     "dev": {
       "key": "dev",
@@ -65,8 +65,32 @@
         "intro": "Diese Übersicht zeigt die Vorlage als Systemkarte mit Einstieg, Hauptsäulen und optionalen Details.",
         "start": {
           "title": "Start im Root",
-          "description": "Der Root bleibt bewusst minimal. Menschen, Claude und Codex starten jeweils über eine eigene Datei.",
+          "description": "Der Root bleibt bewusst minimal. GitHub, Menschen, Claude und Codex finden dort ihre jeweiligen Einstiege.",
           "entries": [
+            {
+              "label": "README",
+              "technicalName": "README.md",
+              "description": "Öffentliche GitHub-Erklärung der Vorlage.",
+              "href": "../README.md"
+            },
+            {
+              "label": "Lizenz",
+              "technicalName": "LICENSE",
+              "description": "MIT-Lizenz der Vorlage.",
+              "href": "../LICENSE"
+            },
+            {
+              "label": "Changelog",
+              "technicalName": "CHANGELOG.md",
+              "description": "Öffentlicher Änderungsverlauf.",
+              "href": "../CHANGELOG.md"
+            },
+            {
+              "label": "Version",
+              "technicalName": "VERSION",
+              "description": "Aktuelle Vorlagenversion.",
+              "href": "../VERSION"
+            },
             {
               "label": "Index",
               "technicalName": "index.md",

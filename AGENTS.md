@@ -31,7 +31,9 @@ Wichtig:
 
 - Nutze `rg` für Suche.
 - Verwende `git mv` für Strukturänderungen.
-- Erzeuge keine zusätzlichen sichtbaren Root-Dateien.
+- Erzeuge keine zusätzlichen sichtbaren Root-Dateien ohne dokumentierten Grund.
+- Für GitHub bleiben `README.md`, `LICENSE`, `CHANGELOG.md` und `VERSION` im
+  Root erlaubt.
 - Prüfe nach OpenRouter-Änderungen:
 
 ```bash

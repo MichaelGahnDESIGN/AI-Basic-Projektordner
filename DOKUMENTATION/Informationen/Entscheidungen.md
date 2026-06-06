@@ -84,3 +84,16 @@ Jeder Eintrag soll mindestens enthalten:
 - Folgen oder Trade-offs: Die Vorlage ist schlanker und sicherer. Abhängigkeiten
   werden bei Bedarf frisch installiert, und echte Backups bleiben lokale,
   bewusst dokumentierte Arbeitsartefakte.
+
+## 2026-06-07 - Öffentliche GitHub-Vorlage mit MIT-Lizenz
+
+- Datum: `2026-06-07`
+- Entscheidung: Die Vorlage wird als öffentlich nutzbare GitHub-Vorlage mit
+  `README.md`, `LICENSE`, `CHANGELOG.md`, `VERSION` und `.github/` vorbereitet.
+- Begründung: Menschen sollen die Ordnerstruktur direkt herunterladen,
+  verstehen und als Startpunkt für neue Projekte einsetzen können.
+- Betroffene Bereiche: Root-Dateien, `.github/`, `DOKUMENTATION/`,
+  `VORLAGE/AI/SKILLS/`, Dokumentationsgenerator.
+- Folgen oder Trade-offs: Der Root enthält nun bewusst einige öffentliche
+  GitHub-Dateien. Die allgemeine Aufräumregel bleibt erhalten: Weitere
+  Root-Dateien brauchen einen dokumentierten Grund.

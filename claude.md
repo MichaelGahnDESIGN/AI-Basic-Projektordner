@@ -24,6 +24,8 @@ Diese Datei ist der Root-Einstieg für Claude Code und Claude Cowork.
 
 - Nutze `.claude/` nur als lokalen Tool-Adapter.
 - Erzeuge keine neuen Root-Dateien, außer der Mensch fordert es ausdrücklich.
+- Für GitHub bleiben `README.md`, `LICENSE`, `CHANGELOG.md` und `VERSION` im
+  Root erlaubt.
 - Dokumentiere wichtige Entscheidungen auf Deutsch in `DOKUMENTATION/`.
 - Überschreibe keine fremden Änderungen.
 - Gib keine Secrets, Tokens oder personenbezogenen Daten aus.

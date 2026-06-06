@@ -136,8 +136,32 @@ def build_dev_folder_overview() -> dict:
         "intro": "Diese Übersicht zeigt die Vorlage als Systemkarte mit Einstieg, Hauptsäulen und optionalen Details.",
         "start": {
             "title": "Start im Root",
-            "description": "Der Root bleibt bewusst minimal. Menschen, Claude und Codex starten jeweils über eine eigene Datei.",
+            "description": "Der Root bleibt bewusst minimal. GitHub, Menschen, Claude und Codex finden dort ihre jeweiligen Einstiege.",
             "entries": [
+                {
+                    "label": "README",
+                    "technicalName": "README.md",
+                    "description": "Öffentliche GitHub-Erklärung der Vorlage.",
+                    "href": make_href(PROJEKT_ROOT / "README.md"),
+                },
+                {
+                    "label": "Lizenz",
+                    "technicalName": "LICENSE",
+                    "description": "MIT-Lizenz der Vorlage.",
+                    "href": make_href(PROJEKT_ROOT / "LICENSE"),
+                },
+                {
+                    "label": "Changelog",
+                    "technicalName": "CHANGELOG.md",
+                    "description": "Öffentlicher Änderungsverlauf.",
+                    "href": make_href(PROJEKT_ROOT / "CHANGELOG.md"),
+                },
+                {
+                    "label": "Version",
+                    "technicalName": "VERSION",
+                    "description": "Aktuelle Vorlagenversion.",
+                    "href": make_href(PROJEKT_ROOT / "VERSION"),
+                },
                 {
                     "label": "Index",
                     "technicalName": "index.md",
@@ -533,8 +557,8 @@ def build_data(generated_at: str) -> dict:
     return {
         "schemaVersion": 4,
         "generatedAt": generated_at,
-        "projectRoot": PROJEKT_ROOT.as_posix(),
-        "documentationRoot": DEV_DOKU_ROOT.as_posix(),
+        "projectRoot": ".",
+        "documentationRoot": "DOKUMENTATION",
         "tabs": {
             "dev": build_dev_documentation(),
             "projekt": build_workspace_documentation(),

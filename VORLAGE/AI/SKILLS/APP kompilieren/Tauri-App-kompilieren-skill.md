@@ -11,7 +11,7 @@
 Ersetze `<APP_NAME>` mit deinem Projektnamen:
 
 ```
-/Users/michaelgahn/GPT_CODEX_PROJEKTE/<KATEGORIE>/<PROJEKT_ORDNER>/<APP_NAME>
+<PROJEKT_ROOT>/PROJEKT/WORKSPACE/<APP_NAME>
 ```
 
 ## Build-Befehle
@@ -56,8 +56,8 @@ cp -f "src-tauri/target/release/bundle/dmg/<APP_NAME>_<VERSION>_aarch64.dmg" "AP
 
 | Variable | Beispiel | Beschreibung |
 |----------|----------|-------------|
-| `<PROJEKT_PFAD>` | `/Users/michaelgahn/GPT_CODEX_PROJEKTE/Spiele/ARCANEX TCG/PROJEKT/Arcanex - CardEngine` | Vollständiger Pfad zum App-Verzeichnis |
-| `<APP_NAME>` | `ARCANEX CardEngine` oder `MyApp` | Name der App (muss mit `tauri.conf.json` übereinstimmen) |
+| `<PROJEKT_PFAD>` | `<PROJEKT_ROOT>/PROJEKT/WORKSPACE/Meine-App` | Vollständiger Pfad zum App-Verzeichnis |
+| `<APP_NAME>` | `Meine App` oder `MyApp` | Name der App (muss mit `tauri.conf.json` übereinstimmen) |
 | `<VERSION>` | `0.2.0` oder `1.0.0` | Versionsnummer aus `tauri.conf.json` und `package.json` |
 
 ## Hinweise

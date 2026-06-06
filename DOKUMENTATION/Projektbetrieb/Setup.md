@@ -19,6 +19,8 @@ Wichtige Schutzregeln:
 
 - `.env`-Dateien werden nicht versioniert.
 - `.DS_Store`, Logs, Build-Ausgaben und `node_modules/` werden ignoriert.
+- Öffentliche GitHub-Dateien im Root sind erlaubt:
+  `README.md`, `LICENSE`, `CHANGELOG.md` und `VERSION`.
 - Lokale Backups unter `BACKUPS/` werden nicht versioniert, außer der
   README.
 - Ein GitHub-Remote ist noch nicht dokumentiert.

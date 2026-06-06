@@ -1,0 +1,74 @@
+name: Quality Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  quality-check:
+    name: Vorlage prüfen
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sichtbare Root-Dateien prüfen
+        run: |
+          set -euo pipefail
+          unerwartete_dateien="$(find . -maxdepth 1 -type f \
+            ! -name 'README.md' \
+            ! -name 'LICENSE' \
+            ! -name 'CHANGELOG.md' \
+            ! -name 'VERSION' \
+            ! -name 'index.md' \
+            ! -name 'claude.md' \
+            ! -name 'AGENTS.md' \
+            ! -name '.*' \
+            -print)"
+          if [ -n "$unerwartete_dateien" ]; then
+            echo "$unerwartete_dateien"
+            exit 1
+          fi
+
+      - name: Lokale Artefakte und Secrets prüfen
+        run: |
+          set -euo pipefail
+          lokale_artefakte="$(find . -path './.git' -prune -o \( \
+            -type d \( -name 'node_modules' -o -name '__pycache__' \) -o \
+            -type f \( -name '.env' -o -name '*.log' -o -name '.DS_Store' \) \
+            \) -print)"
+          if [ -n "$lokale_artefakte" ]; then
+            echo "$lokale_artefakte"
+            exit 1
+          fi
+          if grep -RInE '(/Volumes/|/Users/|smb://|quickconnect|SynoToken|192-168|AI-Workspace|Coding Sandbox)' \
+            --exclude-dir=.git \
+            --exclude='package-lock.json' \
+            .; then
+            exit 1
+          fi
+
+      - name: Dokumentationsdaten aktualisieren
+        run: python3 DOKUMENTATION/Dokumentation-Skills/generate_dokumentationsdaten.py
+
+      - name: Dokumentationsdaten müssen reproduzierbar sein
+        run: git diff --exit-code -- DOKUMENTATION/Dokumentation-Skills/generated
+
+      - name: OpenRouter-Demo syntaktisch prüfen
+        run: npm --prefix DEMOS/OPENROUTER run check

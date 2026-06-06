@@ -22,6 +22,10 @@ Die wichtigste Idee:
 
 | Datei | Für wen | Zweck |
 | --- | --- | --- |
+| `README.md` | GitHub und Menschen | Öffentliche Erklärung der Vorlage. |
+| `LICENSE` | Menschen und Plattformen | Lizenz der Vorlage. |
+| `CHANGELOG.md` | Menschen und Releases | Öffentlicher Änderungsverlauf. |
+| `VERSION` | Menschen und Automationen | Aktuelle Vorlagenversion. |
 | `index.md` | Menschen | Schneller Überblick über die Vorlage. |
 | `claude.md` | Claude Code und Claude Cowork | Arbeitsanweisung für Claude-basierte Werkzeuge. |
 | `AGENTS.md` | ChatGPT Codex | Automatisch gelesene Codex-Projektanweisung. |
@@ -173,7 +177,16 @@ npm --prefix DEMOS/OPENROUTER run check
 Root sauber prüfen:
 
 ```bash
-find . -maxdepth 1 -type f ! -name 'index.md' ! -name 'claude.md' ! -name 'AGENTS.md' ! -name '.*' -print
+find . -maxdepth 1 -type f \
+  ! -name 'README.md' \
+  ! -name 'LICENSE' \
+  ! -name 'CHANGELOG.md' \
+  ! -name 'VERSION' \
+  ! -name 'index.md' \
+  ! -name 'claude.md' \
+  ! -name 'AGENTS.md' \
+  ! -name '.*' \
+  -print
 ```
 
 Wenn dieser letzte Befehl etwas ausgibt, liegt wahrscheinlich eine sichtbare

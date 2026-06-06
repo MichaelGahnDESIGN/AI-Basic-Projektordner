@@ -26,3 +26,17 @@ Pro Eintrag festhalten:
 - Alternativen: Direkte Anbieter-APIs, lokale Modelle oder andere Router.
 - Risiko von Vendor-Lock-in: Mittel, wenn produktive Abläufe stark an
   OpenRouter-Modell-IDs oder Routing gebunden werden.
+
+## Projektvorlage
+
+- Tool oder Dienst: AI Basic Projektordner.
+- Zweck: Wiederverwendbare Ordner- und Dokumentationsvorlage für KI-gestützte
+  Projekte.
+- Lizenz: MIT-Lizenz laut `LICENSE`.
+- Einmalige Kosten: Keine.
+- Laufende Kosten: Keine durch die Vorlage selbst.
+- Limits oder Staffelung: Keine durch die Vorlage selbst.
+- Alternativen: Eigene Projektstruktur, andere Starter-Templates oder
+  framework-spezifische Vorlagen.
+- Risiko von Vendor-Lock-in: Niedrig. Die Vorlage nutzt einfache Dateien,
+  Markdown, GitHub-Konfiguration und lokale Skripte.
