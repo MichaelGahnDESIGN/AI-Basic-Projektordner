@@ -11,7 +11,7 @@ Startdateien enthalten:
 
 - `index.md`
 - `claude.md`
-- `codex.md`
+- `AGENTS.md`
 
 Erlaubte unsichtbare Tool- und Systemordner im Root sind zum Beispiel:
 
@@ -41,7 +41,7 @@ Die funktionale Trennung lautet:
 - [`VORLAGE/AI/PROJEKTREGELN/PROJEKTREGELN.md`](VORLAGE/AI/PROJEKTREGELN/PROJEKTREGELN.md) ist die verbindliche Kerndatei für projektspezifische Regeln, Entscheidungen, Ausnahmen und Besonderheiten.
 - [`VORLAGE/AI/PROJEKTREGELN/SKILL.md`](VORLAGE/AI/PROJEKTREGELN/SKILL.md) beschreibt Struktur und Nutzung des Ordners `VORLAGE/AI/PROJEKTREGELN/`.
 - Weitere Dateien in `VORLAGE/AI/PROJEKTREGELN/` ergänzen bei Bedarf projektspezifische Annahmen, Freigaben und Sonderfälle.
-- [`codex.md`](../../codex.md) ist die Root-Startdatei für ChatGPT Codex.
+- [`AGENTS.md`](../../AGENTS.md) ist die Root-Startdatei für ChatGPT Codex.
 - [`VORLAGE/AI/AGENTEN/AGENTS.md`](VORLAGE/AI/AGENTEN/AGENTS.md) regelt die operative Arbeitsweise, Rollenverteilung, Delegation und Feedback-Schleifen.
 - `VORLAGE/AI/AGENTEN/*.md` beschreibt einzelne Haupt- und Subagenten.
 - [`claude.md`](../../claude.md) ist die Root-Startdatei für Claude Code und Claude Cowork.

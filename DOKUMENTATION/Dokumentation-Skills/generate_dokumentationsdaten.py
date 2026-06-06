@@ -152,9 +152,9 @@ def build_dev_folder_overview() -> dict:
                 },
                 {
                     "label": "Codex",
-                    "technicalName": "codex.md",
+                    "technicalName": "AGENTS.md",
                     "description": "Startpunkt für ChatGPT Codex.",
-                    "href": make_href(PROJEKT_ROOT / "codex.md"),
+                    "href": make_href(PROJEKT_ROOT / "AGENTS.md"),
                 },
                 {
                     "label": "Grundregeln",

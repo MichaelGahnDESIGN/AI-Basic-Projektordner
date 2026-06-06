@@ -9,7 +9,7 @@ Im Root liegen bewusst nur diese sichtbaren Dateien:
 
 - `index.md`: menschlicher Startpunkt.
 - `claude.md`: Startpunkt für Claude Code und Claude Cowork.
-- `codex.md`: Startpunkt für ChatGPT Codex.
+- `AGENTS.md`: Startpunkt für ChatGPT Codex.
 
 Hidden Tool-Ordner wie `.codex/`, `.claude/`, `.agents/` und `.git/` dürfen im
 Root bleiben, weil sie von den jeweiligen Werkzeugen erwartet werden.
@@ -26,7 +26,7 @@ Root bleiben, weil sie von den jeweiligen Werkzeugen erwartet werden.
 ## Neues Projekt Starten
 
 1. Diesen Ordner kopieren und passend benennen.
-2. `codex.md` oder `claude.md` vom verwendeten Tool lesen lassen.
+2. `AGENTS.md` oder `claude.md` vom verwendeten Tool lesen lassen.
 3. Projektkontext in
    `VORLAGE/AI/PROJEKTREGELN/ARBEITSKONTEXT.md` ausfüllen.
 4. Freigaben und Grenzen in

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-06-07T01:05:52+02:00",
+  "generatedAt": "2026-06-07T01:11:51+02:00",
   "projectRoot": "/Volumes/AI-Workspace/Coding Sandbox/Claude-Codex-MCP",
   "documentationRoot": "/Volumes/AI-Workspace/Coding Sandbox/Claude-Codex-MCP/DOKUMENTATION",
   "tabs": {
@@ -75,9 +75,9 @@
             },
             {
               "label": "Codex",
-              "technicalName": "codex.md",
+              "technicalName": "AGENTS.md",
               "description": "Startpunkt für ChatGPT Codex.",
-              "href": "../codex.md"
+              "href": "../AGENTS.md"
             },
             {
               "label": "Grundregeln",

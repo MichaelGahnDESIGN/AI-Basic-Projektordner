@@ -2,10 +2,8 @@
 
 Diese Datei ist der Root-Einstieg für ChatGPT Codex.
 
-Codex liest normalerweise `AGENTS.md`. In dieser Vorlage bleibt der Root aber
-bewusst auf `index.md`, `claude.md` und `codex.md` reduziert. Deshalb ist
-`.codex/config.toml` so konfiguriert, dass `codex.md` als Projektanweisung
-gefunden wird.
+Codex liest `AGENTS.md` automatisch als Projektanweisung. Diese Datei bleibt
+deshalb bewusst der zentrale Codex-Einstieg im Root.
 
 ## Lies Zuerst
 

@@ -1,10 +1,10 @@
 # Lokale Codex-Konfiguration für diese Projektvorlage.
 #
 # Diese Datei hält nur Einstellungen, die Codex beim Start helfen. Fachliche
-# Regeln bleiben in codex.md, VORLAGE/REGELN/ und VORLAGE/AI/.
+# Regeln bleiben in AGENTS.md, VORLAGE/REGELN/ und VORLAGE/AI/.
 
 project_doc_max_bytes = 65536
-project_doc_fallback_filenames = ["codex.md", "claude.md", "index.md"]
+project_doc_fallback_filenames = ["claude.md", "index.md"]
 
 [features]
 hooks = true
