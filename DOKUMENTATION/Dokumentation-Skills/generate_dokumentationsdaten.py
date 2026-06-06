@@ -28,6 +28,7 @@ IGNORED_TREE_NAMES = {
     "build",
     "coverage",
 }
+VISIBLE_TREE_SUFFIXES = {".md", ".html", ".json", ".js"}
 
 
 def make_href(path: Path) -> str:
@@ -39,6 +40,22 @@ def readable_label(path: Path) -> str:
         parts = path.relative_to(PROJEKT_ROOT).parts
         return "/".join(parts[-2:]) if len(parts) >= 2 else path.name
     return path.stem
+
+
+def has_visible_tree_content(path: Path) -> bool:
+    if not path.is_dir():
+        return path.suffix.lower() in VISIBLE_TREE_SUFFIXES
+
+    for child in path.iterdir():
+        if child.name.startswith(".") or child.name in IGNORED_TREE_NAMES or child.name.endswith(".git"):
+            continue
+        if child.is_dir():
+            if has_visible_tree_content(child):
+                return True
+        elif child.suffix.lower() in VISIBLE_TREE_SUFFIXES:
+            return True
+
+    return False
 
 
 def build_link_entry(path: Path) -> dict:
@@ -65,7 +82,9 @@ def tree_entry(path: Path, max_depth: int, current_depth: int = 0) -> dict:
         for child in sorted(path.iterdir(), key=lambda p: (p.is_file(), p.name.lower())):
             if child.name.startswith(".") or child.name in IGNORED_TREE_NAMES or child.name.endswith(".git"):
                 continue
-            if child.is_dir() or child.suffix.lower() in {".md", ".html", ".json", ".js"}:
+            if child.is_dir() and not has_visible_tree_content(child):
+                continue
+            if child.is_dir() or child.suffix.lower() in VISIBLE_TREE_SUFFIXES:
                 children.append(tree_entry(child, max_depth, current_depth + 1))
         entry["children"] = children
     return entry

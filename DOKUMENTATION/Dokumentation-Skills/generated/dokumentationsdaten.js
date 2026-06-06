@@ -1,6 +1,6 @@
 window.DOKU_DATA = {
   "schemaVersion": 4,
-  "generatedAt": "2026-06-07T01:34:08+02:00",
+  "generatedAt": "2026-06-07T01:42:14+02:00",
   "projectRoot": ".",
   "documentationRoot": "DOKUMENTATION",
   "tabs": {
@@ -550,7 +550,7 @@ window.DOKU_DATA = {
             "purpose": "Hier liegen Entscheidungen, Risiken, Setup, Versionen, Rechtliches und die HTML-Übersicht.",
             "counts": {
               "subareas": 6,
-              "directories": 12,
+              "directories": 6,
               "files": 16
             },
             "primaryLinks": [
@@ -562,14 +562,6 @@ window.DOKU_DATA = {
               }
             ],
             "detailsTree": [
-              {
-                "name": "Bilder",
-                "path": "DOKUMENTATION/Bilder",
-                "sourceHref": "Bilder",
-                "href": "Bilder",
-                "type": "dir",
-                "children": []
-              },
               {
                 "name": "Dokumentation-Skills",
                 "path": "DOKUMENTATION/Dokumentation-Skills",
@@ -599,22 +591,6 @@ window.DOKU_DATA = {
                     "type": "file"
                   }
                 ]
-              },
-              {
-                "name": "Fonts",
-                "path": "DOKUMENTATION/Fonts",
-                "sourceHref": "Fonts",
-                "href": "Fonts",
-                "type": "dir",
-                "children": []
-              },
-              {
-                "name": "Icons",
-                "path": "DOKUMENTATION/Icons",
-                "sourceHref": "Icons",
-                "href": "Icons",
-                "type": "dir",
-                "children": []
               },
               {
                 "name": "Informationen",
@@ -659,14 +635,6 @@ window.DOKU_DATA = {
                     "type": "file"
                   }
                 ]
-              },
-              {
-                "name": "Logos",
-                "path": "DOKUMENTATION/Logos",
-                "sourceHref": "Logos",
-                "href": "Logos",
-                "type": "dir",
-                "children": []
               },
               {
                 "name": "Projektbetrieb",
@@ -727,22 +695,6 @@ window.DOKU_DATA = {
                     "type": "file"
                   }
                 ]
-              },
-              {
-                "name": "Screenshots",
-                "path": "DOKUMENTATION/Screenshots",
-                "sourceHref": "Screenshots",
-                "href": "Screenshots",
-                "type": "dir",
-                "children": []
-              },
-              {
-                "name": "Styles",
-                "path": "DOKUMENTATION/Styles",
-                "sourceHref": "Styles",
-                "href": "Styles",
-                "type": "dir",
-                "children": []
               },
               {
                 "name": "ToDo",
