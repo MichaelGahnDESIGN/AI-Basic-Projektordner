@@ -1,6 +1,6 @@
-## Wiki
+## AI Basic Projektordner
 
-- [Home](Home)
+- [Übersicht](Home)
 - [Schnellstart](Schnellstart)
 - [Ordnerstruktur](Ordnerstruktur)
 - [KI-Agenten](KI-Agenten)

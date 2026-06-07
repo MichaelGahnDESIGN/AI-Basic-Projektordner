@@ -1,13 +1,50 @@
-# AI Basic Projektordner Wiki
+# Übersicht: AI Basic Projektordner
 
 Willkommen im Wiki zur Vorlage **AI Basic Projektordner**.
 
-Diese Vorlage ist ein sauberer Startpunkt für KI-gestützte Projekte mit Claude
-Code, Claude Cowork, ChatGPT Codex und ähnlichen Agenten.
+Diese Vorlage ist ein sauberer Startpunkt für neue KI-gestützte Projekte. Sie
+hilft Menschen, Claude Code, Claude Cowork, ChatGPT Codex und ähnliche
+KI-Agenten von Anfang an mit derselben Struktur, denselben Regeln und derselben
+Dokumentationslogik arbeiten zu lassen.
 
-Wichtig: Die Vorlage ist keine fertige App und kein Framework-Boilerplate. Sie
-ist eine neutrale Projektordner-Struktur, die vor dem eigentlichen Bauen für
-Ordnung, Kontext, Dokumentation, Sicherheit und klare Agentenregeln sorgt.
+Die Vorlage ist bewusst **keine fertige App** und kein Framework-Boilerplate.
+Sie ist eine neutrale Projektbasis für Ordnung, Orientierung, Sicherheit,
+Dokumentation und nachvollziehbare Zusammenarbeit, bevor der eigentliche
+Projektcode entsteht.
+
+## Für Wen Ist Diese Vorlage Gedacht?
+
+- Menschen, die regelmäßig mit KI-Agenten an Projekten arbeiten.
+- Selbstständige, kleine Teams und Agenturen.
+- Projekte, bei denen saubere Dokumentation wichtig ist.
+- Anwender, die eine kopierbare Startstruktur für neue Projekte brauchen.
+- Teams, die Claude, Codex und andere Tools nicht jedes Mal neu einrichten
+  möchten.
+
+## Was Die Vorlage Löst
+
+Viele KI-Projekte starten schnell, werden aber nach kurzer Zeit unübersichtlich:
+Regeln liegen verstreut, Dokumentation fehlt, Entscheidungen sind nicht
+nachvollziehbar und Agenten wissen nicht zuverlässig, wo sie beginnen sollen.
+
+Diese Vorlage trennt deshalb klar:
+
+- **öffentliche Einstiegsdateien** im Root
+- **KI-Regeln und Agentenlogik** in eigenen Ordnern
+- **konkreten Projektcode** in `PROJEKT/WORKSPACE/`
+- **Dokumentation, Entscheidungen und Risiken** in `DOKUMENTATION/`
+- **Demos und optionale Beispiele** in `DEMOS/`
+- **lokale Sicherungen** in `BACKUPS/`
+
+## Empfohlener Einstieg
+
+1. Repository herunterladen, klonen oder als Vorlage verwenden.
+2. `README.md` lesen.
+3. `index.md` als kompakten Projekteinstieg öffnen.
+4. Je nach Werkzeug `CLAUDE.md`, `claude.md` oder `AGENTS.md` nutzen.
+5. Projektziel, Grenzen, Risiken und offene Fragen dokumentieren.
+6. Erst danach Code, App-Dateien oder Website-Dateien in `PROJEKT/WORKSPACE/`
+   anlegen.
 
 ## Schnellnavigation
 
@@ -22,30 +59,30 @@ Ordnung, Kontext, Dokumentation, Sicherheit und klare Agentenregeln sorgt.
 - [OpenRouter-Demo](OpenRouter-Demo)
 - [FAQ](FAQ)
 
-## Grundidee
+## Die Wichtigsten Dateien
 
-- Menschen starten über `README.md` und `index.md`.
-- Claude Code startet über `CLAUDE.md`.
-- ChatGPT Codex startet über `AGENTS.md`.
-- Konkreter Projektcode gehört nach `PROJEKT/WORKSPACE/`.
-- Vorlagenlogik, Agenten und Skills liegen in `VORLAGE/`.
-- Entscheidungen, Risiken und Setup-Hinweise liegen in `DOKUMENTATION/`.
-- Demos bleiben getrennt in `DEMOS/`.
-- Lokale Sicherungen bleiben in `BACKUPS/` und werden nicht automatisch
-  versioniert.
+| Datei | Zweck |
+| --- | --- |
+| `README.md` | Öffentliche Erklärung für Menschen auf GitHub. |
+| `index.md` | Kurze Start- und Orientierungsseite im Projekt. |
+| `CLAUDE.md` | Einstieg für Claude Code. |
+| `claude.md` | Menschlich lesbare Claude-Hinweise. |
+| `AGENTS.md` | Einstieg für ChatGPT Codex und kompatible Agenten. |
+| `SECURITY.md` | Sicherheits- und Meldehinweise. |
+| `CHANGELOG.md` | Nachvollziehbare Versionshistorie. |
 
-## Für Wen Ist Das Nützlich?
+## Grundprinzipien
 
-- Solo-Selbstständige und kleine Teams.
-- Menschen, die KI-Agenten regelmäßig in Projekten einsetzen.
-- Projekte, bei denen Dokumentation und Nachvollziehbarkeit wichtig sind.
-- Anwender, die eine klare Startstruktur suchen, bevor Code entsteht.
+- Root ruhig halten.
+- Projektcode nur in `PROJEKT/WORKSPACE/` entwickeln.
+- Dokumentation direkt mitführen.
+- Entscheidungen und Risiken verständlich notieren.
+- Keine Secrets, Tokens oder personenbezogenen Daten veröffentlichen.
+- Demos getrennt halten.
+- Änderungen über Git nachvollziehbar machen.
 
-## Empfohlener Einstieg
+## Nächster Sinnvoller Schritt
 
-1. Repository herunterladen oder als Vorlage kopieren.
-2. `README.md` lesen.
-3. `index.md` lesen.
-4. Je nach Tool `CLAUDE.md`, `claude.md` oder `AGENTS.md` verwenden.
-5. Projektkontext ausfüllen.
-6. Erst danach Code in `PROJEKT/WORKSPACE/` anlegen.
+Wenn du die Vorlage für ein neues Projekt nutzt, beginne mit dem
+[Schnellstart](Schnellstart) und kopiere anschließend einen passenden Prompt
+aus dem [Prompt-Cheatsheet](Prompt-Cheatsheet).

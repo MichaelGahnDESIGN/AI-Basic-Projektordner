@@ -1,6 +1,6 @@
 window.DOKU_DATA = {
   "schemaVersion": 4,
-  "generatedAt": "2026-06-07T02:45:23+02:00",
+  "generatedAt": "2026-06-07T03:34:58+02:00",
   "projectRoot": ".",
   "documentationRoot": "DOKUMENTATION",
   "tabs": {
@@ -526,8 +526,8 @@ window.DOKU_DATA = {
             "purpose": "Hier liegt die eigentliche technische Arbeit des neu entstehenden Projekts.",
             "counts": {
               "subareas": 3,
-              "directories": 1,
-              "files": 1
+              "directories": 3,
+              "files": 3
             },
             "primaryLinks": [
               {
@@ -546,10 +546,38 @@ window.DOKU_DATA = {
                 "type": "dir",
                 "children": [
                   {
+                    "name": "docs",
+                    "path": "PROJEKT/WORKSPACE/docs",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs",
+                    "href": "../PROJEKT/WORKSPACE/docs",
+                    "type": "dir"
+                  },
+                  {
+                    "name": "examples",
+                    "path": "PROJEKT/WORKSPACE/examples",
+                    "sourceHref": "../PROJEKT/WORKSPACE/examples",
+                    "href": "../PROJEKT/WORKSPACE/examples",
+                    "type": "dir"
+                  },
+                  {
+                    "name": "package.json",
+                    "path": "PROJEKT/WORKSPACE/package.json",
+                    "sourceHref": "../PROJEKT/WORKSPACE/package.json",
+                    "href": "../PROJEKT/WORKSPACE/package.json",
+                    "type": "file"
+                  },
+                  {
                     "name": "README.md",
                     "path": "PROJEKT/WORKSPACE/README.md",
                     "sourceHref": "../PROJEKT/WORKSPACE/README.md",
                     "href": "../PROJEKT/WORKSPACE/README.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "tsconfig.json",
+                    "path": "PROJEKT/WORKSPACE/tsconfig.json",
+                    "sourceHref": "../PROJEKT/WORKSPACE/tsconfig.json",
+                    "href": "../PROJEKT/WORKSPACE/tsconfig.json",
                     "type": "file"
                   }
                 ]
@@ -1134,9 +1162,9 @@ window.DOKU_DATA = {
             "subtitle": "Konkrete technische Projektumsetzung",
             "purpose": "Hier liegt das tatsächlich erstellte Projekt mit Code, Assets, Konfigurationen und seiner konkreten technischen Struktur.",
             "counts": {
-              "subareas": 1,
-              "directories": 0,
-              "files": 1
+              "subareas": 5,
+              "directories": 2,
+              "files": 9
             },
             "primaryLinks": [
               {
@@ -1154,10 +1182,84 @@ window.DOKU_DATA = {
             ],
             "detailsTree": [
               {
+                "name": "docs",
+                "path": "PROJEKT/WORKSPACE/docs",
+                "sourceHref": "../PROJEKT/WORKSPACE/docs",
+                "href": "../PROJEKT/WORKSPACE/docs",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "claude_integration.md",
+                    "path": "PROJEKT/WORKSPACE/docs/claude_integration.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/claude_integration.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/claude_integration.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "codex_integration.md",
+                    "path": "PROJEKT/WORKSPACE/docs/codex_integration.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/codex_integration.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/codex_integration.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "konzept.md",
+                    "path": "PROJEKT/WORKSPACE/docs/konzept.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/konzept.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/konzept.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "mcp_tools.md",
+                    "path": "PROJEKT/WORKSPACE/docs/mcp_tools.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/mcp_tools.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/mcp_tools.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "sicherheitsregeln.md",
+                    "path": "PROJEKT/WORKSPACE/docs/sicherheitsregeln.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/sicherheitsregeln.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/sicherheitsregeln.md",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "examples",
+                "path": "PROJEKT/WORKSPACE/examples",
+                "sourceHref": "../PROJEKT/WORKSPACE/examples",
+                "href": "../PROJEKT/WORKSPACE/examples",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "agent_comms.md",
+                    "path": "PROJEKT/WORKSPACE/examples/agent_comms.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/examples/agent_comms.md",
+                    "href": "../PROJEKT/WORKSPACE/examples/agent_comms.md",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "package.json",
+                "path": "PROJEKT/WORKSPACE/package.json",
+                "sourceHref": "../PROJEKT/WORKSPACE/package.json",
+                "href": "../PROJEKT/WORKSPACE/package.json",
+                "type": "file"
+              },
+              {
                 "name": "README.md",
                 "path": "PROJEKT/WORKSPACE/README.md",
                 "sourceHref": "../PROJEKT/WORKSPACE/README.md",
                 "href": "../PROJEKT/WORKSPACE/README.md",
+                "type": "file"
+              },
+              {
+                "name": "tsconfig.json",
+                "path": "PROJEKT/WORKSPACE/tsconfig.json",
+                "sourceHref": "../PROJEKT/WORKSPACE/tsconfig.json",
+                "href": "../PROJEKT/WORKSPACE/tsconfig.json",
                 "type": "file"
               }
             ]
