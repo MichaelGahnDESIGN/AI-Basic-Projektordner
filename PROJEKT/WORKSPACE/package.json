@@ -1,0 +1,18 @@
+{
+  "name": "claude-codex-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Lokaler MCP-Server für menschenlesbare Agenten-Kommunikation zwischen Codex, Claude und weiteren KI-Agenten.",
+  "license": "MIT",
+  "scripts": {
+    "check": "npm run test && npm run smoke",
+    "dev": "node --experimental-strip-types src/index.ts",
+    "smoke": "node --experimental-strip-types src/scripts/smoke.ts",
+    "start": "node --experimental-strip-types src/index.ts",
+    "test": "node --experimental-strip-types --test \"tests/**/*.test.ts\""
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  }
+}

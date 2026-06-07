@@ -32,3 +32,29 @@ Pro Eintrag festhalten:
 - Absicherung oder nächste Maßnahme: Das Root-Git ist die aktive und
   maßgebliche Versionierung. Relevante Strukturänderungen werden zusätzlich in
   Entscheidungen, Versionen und Backups dokumentiert.
+
+## Lokaler Paketmanager auf Workspace-Volume
+
+- Risiko: NPM-Installationen auf dem aktuellen Workspace-Volume können hängen
+  oder unvollständige `node_modules`-Zustände erzeugen.
+- Eintrittswahrscheinlichkeit: Mittel.
+- Auswirkung: Abhängigkeiten könnten beschädigt werden oder ungetrackte
+  Entwicklungsdateien während eines abgebrochenen Installationslaufs entfernen.
+- Betroffene Bereiche: `PROJEKT/WORKSPACE/`, lokale Tests,
+  spätere SDK-Integration.
+- Absicherung oder nächste Maßnahme: Phase 1 nutzt keine NPM-Abhängigkeiten.
+  Vor späterer SDK-Nutzung zuerst Paketinstallation und Lockfile in einem
+  isolierten Testlauf prüfen.
+
+## Safety-Check ist kein vollständiger DLP-Ersatz
+
+- Risiko: Der lokale Safety-Check erkennt offensichtliche Secrets, kann aber
+  nicht alle personenbezogenen Daten oder vertraulichen Inhalte sicher finden.
+- Eintrittswahrscheinlichkeit: Mittel.
+- Auswirkung: Agenten könnten trotz Prüfung sensible Inhalte in Markdown oder
+  JSON-State eintragen.
+- Betroffene Bereiche: `agent_comms.md`, `agent_comms.state.json`, Aufgaben,
+  Chat, Logs und Übergaben.
+- Absicherung oder nächste Maßnahme: Agentenregeln und Dokumentation betonen
+  Datenminimierung. Sensible Details sollen als neutraler Blocker beschrieben
+  statt gespeichert werden.
