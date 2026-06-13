@@ -76,4 +76,12 @@ return [
         'absender'      => 'PLATZHALTER_ABSENDER_EMAIL',
         'absender_name' => 'Shape Miner',
     ],
+
+    // --- Admin-API (Server-zu-Server: Editor → admin_nutzer.php) -------------
+    // Gemeinsames Geheimnis für die zentrale Nutzerverwaltung im Editor.
+    // MUSS identisch im Editor hinterlegt sein (DELUXE-config.php → smu_admin.geheimnis).
+    // Erzeugen: php -r "echo base64_encode(random_bytes(32)), PHP_EOL;"
+    'admin_api' => [
+        'geheimnis' => 'PLATZHALTER_BASE64_32_BYTE',
+    ],
 ];

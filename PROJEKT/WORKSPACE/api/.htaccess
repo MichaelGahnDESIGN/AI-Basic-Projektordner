@@ -10,7 +10,8 @@ SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </FilesMatch>
 
 # Nur die öffentlichen API-Endpunkte freischalten.
-<FilesMatch "^(register|login|me|profil_aktualisieren|email_aendern|passwort_aendern|konto_loeschen|zwei_faktor_status|zwei_faktor_start|zwei_faktor_aktivieren|zwei_faktor_deaktivieren)\.php$">
+# admin_nutzer.php: Server-zu-Server-Verwaltung, eigenes Geheimnis im Body.
+<FilesMatch "^(register|login|me|profil_aktualisieren|email_aendern|passwort_aendern|konto_loeschen|zwei_faktor_status|zwei_faktor_start|zwei_faktor_aktivieren|zwei_faktor_deaktivieren|admin_nutzer)\.php$">
     Require all granted
 </FilesMatch>
 
