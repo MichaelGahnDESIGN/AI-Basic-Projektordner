@@ -11,6 +11,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/sitzung.php';
 require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/nutzer.php';
+require_once SMU_API_PFAD . '/mail.php';
 require_once __DIR__ . '/../includes/layout_kopf.php';
 require_once __DIR__ . '/../includes/layout_fuss.php';
 
@@ -23,6 +24,7 @@ $profil = nutzer_profil_laden($userId);
 if ($profil === null) { header('Location: /abmelden'); exit; }
 
 $feldFehler = [];
+$bestaetigungGesendet = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_pruefen();
@@ -56,18 +58,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($feldFehler)) {
-        smu_db()->prepare(
-            'UPDATE users SET email_enc = :enc, email_blind_index = :bi, aktualisiert_am = NOW()
-             WHERE id = :id'
+        // Double-Opt-In: Änderung NICHT sofort übernehmen, sondern Token an die
+        // neue Adresse senden. Erst nach Bestätigung wird sie wirksam.
+        $token = bin2hex(random_bytes(32));
+        $db = smu_db();
+        // Alte offene Änderungswünsche dieses Nutzers verwerfen.
+        $db->prepare('DELETE FROM email_aenderung WHERE user_id = :id')->execute([':id' => $userId]);
+        $db->prepare(
+            'INSERT INTO email_aenderung (token_hash, user_id, neue_email_enc, neue_email_bidx, ablauf)
+             VALUES (:th, :uid, :enc, :bidx, (NOW() + INTERVAL 1 HOUR))'
         )->execute([
-            ':enc' => smu_verschluesseln($neueEmail, 'email_enc'),
-            ':bi'  => $neuerBlindIdx,
-            ':id'  => $userId,
+            ':th'   => hash('sha256', $token),
+            ':uid'  => $userId,
+            ':enc'  => smu_verschluesseln($neueEmail, 'email_enc'),
+            ':bidx' => $neuerBlindIdx,
         ]);
 
-        smu_hinweis_setzen('erfolg', 'E-Mail-Adresse erfolgreich geändert.');
-        header('Location: /konto/email');
-        exit;
+        // Bestätigungslink an die NEUE Adresse.
+        smu_mail_senden(
+            $neueEmail,
+            'Shape Miner — E-Mail-Adresse bestätigen',
+            "Hallo,\n\nbitte bestätige innerhalb der nächsten Stunde, dass diese "
+            . "Adresse künftig für dein Shape-Miner-Konto verwendet werden soll:\n\n"
+            . 'https://login.shapeminer.com/email-bestaetigen?token=' . $token . "\n\n"
+            . "Wenn du das nicht warst, ignoriere diese E-Mail.\n\nDein Shape-Miner-Team"
+        );
+        // Sicherheits-Benachrichtigung an die ALTE Adresse.
+        smu_mail_senden(
+            $profil['email'],
+            'Shape Miner — Änderung deiner E-Mail-Adresse angefordert',
+            "Hallo,\n\nfür dein Konto wurde eine Änderung der E-Mail-Adresse "
+            . "angefordert. Sie wird erst nach Bestätigung über die neue Adresse "
+            . "wirksam.\n\nWenn du das nicht warst, ändere bitte umgehend dein "
+            . "Passwort.\n\nDein Shape-Miner-Team"
+        );
+
+        $bestaetigungGesendet = true;
     }
 }
 
@@ -78,6 +104,13 @@ layout_kopf('E-Mail ändern', true, 'email');
     <h1>E-Mail ändern</h1>
     <p>Aktuelle Adresse: <strong><?= htmlspecialchars($profil['email'], ENT_QUOTES) ?></strong></p>
 </div>
+
+<?php if ($bestaetigungGesendet): ?>
+<div class="hinweis hinweis-erfolg">
+    Wir haben einen Bestätigungslink an die neue Adresse gesendet. Die Änderung
+    wird erst wirksam, nachdem du den Link dort bestätigt hast (gültig 1 Stunde).
+</div>
+<?php endif; ?>
 
 <div class="karte">
     <form method="POST" class="formular">

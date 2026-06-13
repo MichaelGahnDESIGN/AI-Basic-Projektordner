@@ -12,6 +12,7 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/sitzung.php';
 require_once __DIR__ . '/includes/csrf.php';
 require_once __DIR__ . '/includes/nutzer.php';
+require_once SMU_API_PFAD . '/validierung.php';
 require_once __DIR__ . '/includes/layout_kopf.php';
 require_once __DIR__ . '/includes/layout_fuss.php';
 
@@ -40,21 +41,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $eingaben = compact('vorname', 'nachname', 'email', 'benutzername', 'sprache');
 
-    // Validierung
-    if (mb_strlen($vorname) < 1 || mb_strlen($vorname) > 100) {
-        $feldFehler['vorname'] = '1–100 Zeichen.';
+    // Validierung — dieselben Regeln wie die API (validierung.php),
+    // u. a. Ablehnung von Steuerzeichen in Namen (Konsistenz Web ↔ API).
+    if (validierung_text($vorname, 1, 100) === null) {
+        $feldFehler['vorname'] = '1–100 Zeichen, keine Steuerzeichen.';
     }
-    if (mb_strlen($nachname) < 1 || mb_strlen($nachname) > 100) {
-        $feldFehler['nachname'] = '1–100 Zeichen.';
+    if (validierung_text($nachname, 1, 100) === null) {
+        $feldFehler['nachname'] = '1–100 Zeichen, keine Steuerzeichen.';
     }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 254) {
+    if (validierung_email($email) === null) {
         $feldFehler['email'] = 'Keine gültige E-Mail-Adresse.';
     }
-    if (!preg_match('/^[A-Za-z0-9_]{3,30}$/', $benutzername)) {
+    if (validierung_benutzername($benutzername) === null) {
         $feldFehler['benutzername'] = '3–30 Zeichen, nur A–Z, 0–9 und _.';
     }
-    if (mb_strlen($passwort) < 8) {
-        $feldFehler['passwort'] = 'Mindestens 8 Zeichen.';
+    if (validierung_passwort($passwort) === null) {
+        $feldFehler['passwort'] = 'Mindestens 8 Zeichen (höchstens 200).';
     }
     if (!$agb) {
         $feldFehler['agb'] = 'Bitte AGB bestätigen.';
