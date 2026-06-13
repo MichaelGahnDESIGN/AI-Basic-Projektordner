@@ -22,8 +22,9 @@ RewriteRule ^konto/([a-z]+)/?$ konto/$1.php [L]
 # Konto-Übersicht: /konto
 RewriteRule ^konto/?$ konto/index.php [L]
 
-# Einfache Routen: /anmelden, /registrieren, /abmelden
-RewriteRule ^([a-z]+)/?$ $1.php [L]
+# Einfache Routen: /anmelden, /registrieren, /abmelden, /passwort-vergessen …
+# (Bindestriche erlaubt für mehrteilige Routen)
+RewriteRule ^([a-z-]+)/?$ $1.php [L]
 
 # Root → index.php
 RewriteRule ^$ index.php [L]

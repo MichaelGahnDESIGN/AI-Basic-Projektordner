@@ -150,6 +150,7 @@ layout_kopf('Anmelden', false);
 
     <div class="auth-fuss">
         Noch kein Konto? <a href="/registrieren">Registrieren</a>
+        <br><a href="/passwort-vergessen">Passwort vergessen?</a>
     </div>
 </div>
 

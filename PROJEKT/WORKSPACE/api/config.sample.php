@@ -65,4 +65,15 @@ return [
         'time_cost'   => 4,
         'threads'     => 1,
     ],
+
+    // --- SMTP (Passwort-Reset, Benachrichtigungen) ---------------------------
+    // Authentifizierter Versand über SSL (Port 465). Postfach z. B. bei All-Inkl.
+    'smtp' => [
+        'host'          => 'PLATZHALTER_SMTP_HOST',     // z. B. wXXXXXXX.kasserver.com
+        'port'          => 465,
+        'benutzer'      => 'PLATZHALTER_SMTP_BENUTZER',  // z. B. support@deine-domain.de
+        'passwort'      => 'PLATZHALTER_SMTP_PASSWORT',
+        'absender'      => 'PLATZHALTER_ABSENDER_EMAIL',
+        'absender_name' => 'Shape Miner',
+    ],
 ];
