@@ -36,6 +36,7 @@ function layout_kopf(string $titel, bool $mitSidebar = true, string $aktivNav = 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://login.shapeminer.com/assets/og-image.png">
     <link rel="stylesheet" href="/assets/style.css">
+    <script src="/assets/sternenfeld.js" defer></script>
 </head>
 <body class="<?= $mitSidebar ? 'mit-sidebar' : 'ohne-sidebar' ?>">
 
