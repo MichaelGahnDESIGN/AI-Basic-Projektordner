@@ -21,6 +21,20 @@ function layout_kopf(string $titel, bool $mitSidebar = true, string $aktivNav = 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($titel, ENT_QUOTES) ?> · Shape Miner Account</title>
+    <meta name="theme-color" content="#05060E">
+    <meta name="description" content="Shape Miner Account — ein Login für alle Shape-Miner-Spiele.">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Shape Miner">
+    <meta property="og:title" content="Shape Miner Account">
+    <meta property="og:description" content="Ein Konto — alle Shape-Miner-Spiele. Sicher anmelden und verwalten.">
+    <meta property="og:url" content="https://login.shapeminer.com/">
+    <meta property="og:image" content="https://login.shapeminer.com/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://login.shapeminer.com/assets/og-image.png">
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body class="<?= $mitSidebar ? 'mit-sidebar' : 'ohne-sidebar' ?>">
