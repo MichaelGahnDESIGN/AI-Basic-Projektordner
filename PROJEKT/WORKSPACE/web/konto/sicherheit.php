@@ -52,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([':id' => $userId]);
         $z = $stmt->fetch();
 
+        if ($z === false) { header('Location: /abmelden'); exit; }
+
         if (!password_verify($passwort, (string) $z['passwort_hash'])) {
             $fehler = 'Passwort falsch.';
         } else {
@@ -59,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'UPDATE users SET totp_secret_enc = NULL, totp_aktiviert = 0, aktualisiert_am = NOW()
                  WHERE id = :id'
             )->execute([':id' => $userId]);
+            unset($_SESSION['totp_setup_secret']);
 
             smu_hinweis_setzen('erfolg', '2-Faktor-Authentifizierung deaktiviert.');
             header('Location: /konto/sicherheit');
@@ -66,10 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
     } elseif ($aktion === 'aktivieren') {
-        $code        = trim((string) ($_POST['totp_code'] ?? ''));
-        $secretRoh   = (string) ($_POST['secret_b32'] ?? '');
+        $code = trim((string) ($_POST['totp_code'] ?? ''));
+        // Secret kommt SERVERSEITIG aus der Session, nie aus dem Client-POST.
+        $secretRoh = (string) ($_SESSION['totp_setup_secret'] ?? '');
 
-        if (!totp_code_pruefen($secretRoh, $code)) {
+        if ($secretRoh === '') {
+            $fehler = 'Einrichtung abgelaufen. Bitte Seite neu laden.';
+        } elseif (!totp_code_pruefen($secretRoh, $code)) {
             $fehler = 'Code ungültig oder abgelaufen. Bitte erneut versuchen.';
         } else {
             smu_db()->prepare(
@@ -79,19 +85,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':enc' => krypto_verschluesseln($secretRoh, 'users.totp_secret_enc'),
                 ':id'  => $userId,
             ]);
+            unset($_SESSION['totp_setup_secret']);
 
             smu_hinweis_setzen('erfolg', '2-Faktor-Authentifizierung erfolgreich aktiviert!');
             header('Location: /konto/sicherheit');
             exit;
         }
-        // Bei Fehler: secret aus POST wiederverwenden um QR-Code erneut anzuzeigen
+        // Bei Fehler: vorhandenes Session-Secret weiterverwenden (QR erneut).
         $secret = $secretRoh;
     }
 }
 
-// Für Aktivierungs-Formular: Secret generieren (aus POST oder frisch)
-if (!$ist2faAktiv && $secret === '') {
-    $secret = totp_secret_erzeugen();
+// Für Aktivierungs-Formular: Secret serverseitig in der Session halten.
+if (!$ist2faAktiv) {
+    if ($secret === '') {
+        $secret = (string) ($_SESSION['totp_setup_secret'] ?? '');
+    }
+    if ($secret === '') {
+        $secret = totp_secret_erzeugen();
+    }
+    $_SESSION['totp_setup_secret'] = $secret;
 }
 
 if (!$ist2faAktiv) {
@@ -159,7 +172,6 @@ layout_kopf('2-Faktor-Auth', true, 'sicherheit');
     <form method="POST" class="formular">
         <?= csrf_feld() ?>
         <input type="hidden" name="aktion" value="aktivieren">
-        <input type="hidden" name="secret_b32" value="<?= htmlspecialchars($secret, ENT_QUOTES) ?>">
         <div class="formular-gruppe">
             <label for="totp_code">6-stelliger Code aus der App</label>
             <input type="number" id="totp_code" name="totp_code"

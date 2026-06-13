@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([':id' => $userId]);
     $zeile = $stmt->fetch();
 
+    if ($zeile === false) { header('Location: /abmelden'); exit; }
+
     if (!password_verify($passwort, (string) $zeile['passwort_hash'])) {
         $fehler = 'Passwort ist falsch.';
     } elseif (strtolower($bestaetigung) !== 'account löschen') {

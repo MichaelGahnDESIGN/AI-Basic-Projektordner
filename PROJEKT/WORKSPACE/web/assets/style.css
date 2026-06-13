@@ -276,6 +276,23 @@ textarea:focus {
     color: var(--warnung);
 }
 
+/* Rechtstexte (AGB / Datenschutz) — gut lesbarer Fließtext */
+.rechtstext {
+    color: var(--text-75);
+    font-size: 14px;
+    line-height: 1.7;
+}
+.rechtstext h2 {
+    color: var(--text);
+    font-size: 16px;
+    margin: 22px 0 8px;
+}
+.rechtstext h2:first-child { margin-top: 0; }
+.rechtstext p { margin: 0 0 12px; }
+.rechtstext ul { margin: 0 0 12px 18px; }
+.rechtstext li { margin-bottom: 6px; }
+.rechtstext a { color: var(--akzent); }
+
 /* ---- Login-/Registrierung-Karte (ohne Sidebar) ----------------------------- */
 .auth-karte {
     background: var(--flaeche);

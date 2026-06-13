@@ -230,14 +230,14 @@ layout_kopf('Registrieren', false);
         <div style="display:flex; flex-direction:column; gap:10px; font-size:13px; color:var(--text-60);">
             <label style="display:flex; align-items:center; gap:10px; text-transform:none; font-weight:400; letter-spacing:0;">
                 <input type="checkbox" name="agb" <?= !empty($_POST['agb']) ? 'checked' : '' ?>>
-                Ich akzeptiere die <a href="https://deluxe.shapeminer.com" target="_blank">AGB</a>
+                Ich akzeptiere die <a href="/agb" target="_blank">AGB</a>
                 <?php if (!empty($feldFehler['agb'])): ?>
                 <span class="feld-fehler"><?= htmlspecialchars($feldFehler['agb'], ENT_QUOTES) ?></span>
                 <?php endif; ?>
             </label>
             <label style="display:flex; align-items:center; gap:10px; text-transform:none; font-weight:400; letter-spacing:0;">
                 <input type="checkbox" name="datenschutz" <?= !empty($_POST['datenschutz']) ? 'checked' : '' ?>>
-                Ich akzeptiere die <a href="https://deluxe.shapeminer.com" target="_blank">Datenschutzerklärung</a>
+                Ich akzeptiere die <a href="/datenschutz" target="_blank">Datenschutzerklärung</a>
                 <?php if (!empty($feldFehler['datenschutz'])): ?>
                 <span class="feld-fehler"><?= htmlspecialchars($feldFehler['datenschutz'], ENT_QUOTES) ?></span>
                 <?php endif; ?>

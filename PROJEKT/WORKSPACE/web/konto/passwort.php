@@ -31,6 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([':id' => $userId]);
     $zeile = $stmt->fetch();
 
+    // Konto zwischenzeitlich gelöscht (anderer Tab) → sauber abmelden.
+    if ($zeile === false) { header('Location: /abmelden'); exit; }
+
     if (!password_verify($altPw, (string) $zeile['passwort_hash'])) {
         $feldFehler['passwort_alt'] = 'Aktuelles Passwort ist falsch.';
     }
