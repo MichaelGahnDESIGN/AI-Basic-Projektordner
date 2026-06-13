@@ -22,6 +22,7 @@ require_once __DIR__ . '/../includes/layout_kopf.php';
 require_once __DIR__ . '/../includes/layout_fuss.php';
 require_once SMU_API_PFAD . '/totp.php';
 require_once SMU_API_PFAD . '/crypto.php';
+require_once SMU_API_PFAD . '/recovery.php';
 
 smu_sitzung_starten();
 smu_einloggen_erforderlich();
@@ -87,6 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
             unset($_SESSION['totp_setup_secret']);
 
+            // Recovery-Codes erzeugen und EINMALIG zur Anzeige in die Session legen.
+            $_SESSION['recovery_codes_neu'] = recovery_codes_erzeugen(smu_db(), $userId);
+
             smu_hinweis_setzen('erfolg', '2-Faktor-Authentifizierung erfolgreich aktiviert!');
             header('Location: /konto/sicherheit');
             exit;
@@ -114,6 +118,11 @@ if (!$ist2faAktiv) {
         . '&issuer=Shape%20Miner&algorithm=SHA1&digits=6&period=30';
 }
 
+// Frisch erzeugte Recovery-Codes (nur EINMAL anzeigen, dann aus Session löschen).
+$recoveryCodesNeu = $_SESSION['recovery_codes_neu'] ?? [];
+unset($_SESSION['recovery_codes_neu']);
+$recoveryVerbleibend = $ist2faAktiv ? recovery_codes_verbleibend(smu_db(), $userId) : 0;
+
 layout_kopf('2-Faktor-Auth', true, 'sicherheit');
 ?>
 
@@ -126,11 +135,33 @@ layout_kopf('2-Faktor-Auth', true, 'sicherheit');
 <div class="hinweis hinweis-fehler"><?= htmlspecialchars($fehler, ENT_QUOTES) ?></div>
 <?php endif; ?>
 
+<?php if (!empty($recoveryCodesNeu)): ?>
+<div class="karte" style="border-color: rgba(102,224,255,0.4); margin-bottom: 20px;">
+    <h2>Deine Recovery-Codes</h2>
+    <p style="color: var(--warnung); margin-bottom: 16px;">
+        Bewahre diese Codes sicher auf. Jeder Code funktioniert <strong>einmal</strong>
+        und ersetzt deine Authenticator-App, falls du sie verlierst.
+        Sie werden <strong>nur jetzt</strong> angezeigt.
+    </p>
+    <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 15px;">
+        <?php foreach ($recoveryCodesNeu as $rc): ?>
+        <code style="letter-spacing:0.1em; color:var(--akzent); background:rgba(102,224,255,0.06);
+                     padding:8px 10px; border-radius:6px; text-align:center;">
+            <?= htmlspecialchars($rc, ENT_QUOTES) ?>
+        </code>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endif; ?>
+
 <?php if ($ist2faAktiv): ?>
 <div class="karte">
     <h2>Status: Aktiv</h2>
-    <p style="color: var(--erfolg); margin-bottom: 20px;">
+    <p style="color: var(--erfolg); margin-bottom: 8px;">
         Dein Konto ist durch 2FA geschützt.
+    </p>
+    <p style="color: var(--text-60); font-size: 13px; margin-bottom: 20px;">
+        Verbleibende Recovery-Codes: <strong><?= (int) $recoveryVerbleibend ?></strong>
     </p>
     <form method="POST" class="formular">
         <?= csrf_feld() ?>

@@ -18,6 +18,7 @@ require_once __DIR__ . '/includes/csrf.php';
 require_once __DIR__ . '/includes/nutzer.php';
 require_once SMU_API_PFAD . '/totp.php';
 require_once SMU_API_PFAD . '/rate_limit.php';
+require_once SMU_API_PFAD . '/recovery.php';
 
 smu_sitzung_starten();
 
@@ -41,54 +42,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Brute-Force-Schutz: pro IP zählen, nach Grenze temporär sperren.
     $ratePdo = smu_db();
     $rateKey = rate_limit_schluessel('web-login', (string) ($_SERVER['REMOTE_ADDR'] ?? ''));
-    $wartenSek = rate_limit_gesperrt($ratePdo, $rateKey);
 
-    if ($wartenSek > 0) {
+    // Offenen 2FA-Schritt aus der Session laden (max. 5 Minuten gültig).
+    $pending = $_SESSION['pending_2fa'] ?? null;
+    if (is_array($pending) && (time() - (int) ($pending['zeit'] ?? 0)) > 300) {
+        $pending = null;
+        unset($_SESSION['pending_2fa']);
+    }
+
+    if (rate_limit_gesperrt($ratePdo, $rateKey) > 0) {
+        $wartenSek = rate_limit_gesperrt($ratePdo, $rateKey);
         $fehler = 'Zu viele Anmeldeversuche. Bitte in etwa '
             . (int) ceil($wartenSek / 60) . ' Minuten erneut versuchen.';
-        // Bei aktiver 2FA-Eingabe das Formular im 2FA-Zustand halten.
-        $totpErforderlich = $totpCode !== '' || $passwort === '';
-    } else {
-        // Blind-Index für E-Mail-Suche
-        $blindIdx = smu_blind_index($email);
+        $totpErforderlich = $pending !== null;
 
+    } elseif ($pending !== null) {
+        // --- Zweiter Schritt: TOTP- bzw. Recovery-Code prüfen --------------------
+        $userId = (int) $pending['user_id'];
         $stmt = smu_db()->prepare(
-            'SELECT id, passwort_hash, aktiv, totp_secret_enc, totp_aktiviert
-             FROM users WHERE email_blind_index = :bi'
+            'SELECT id, aktiv, totp_secret_enc, totp_aktiviert FROM users WHERE id = :id'
         );
-        $stmt->execute([':bi' => $blindIdx]);
+        $stmt->execute([':id' => $userId]);
         $zeile = $stmt->fetch();
 
-        // Timing-konstant: immer einen ECHTEN Argon2id-Vergleich durchführen.
-        // Der Dummy muss ein gültiger Argon2id-Hash sein, sonst kehrt
-        // password_verify() sofort zurück → Antwortzeit verrät existierende Konten.
+        if ($zeile === false || (int) $zeile['aktiv'] !== 1 || (int) $zeile['totp_aktiviert'] !== 1) {
+            unset($_SESSION['pending_2fa']);
+            $fehler = 'Anmeldung abgelaufen. Bitte erneut anmelden.';
+        } elseif ($totpCode === '') {
+            $totpErforderlich = true;
+        } else {
+            $secret = smu_entschluesseln((string) $zeile['totp_secret_enc'], 'users.totp_secret_enc');
+            $totpOk = totp_code_pruefen($secret, $totpCode);
+            $recoveryOk = !$totpOk && recovery_code_einloesen($ratePdo, $userId, $totpCode);
+
+            if (!$totpOk && !$recoveryOk) {
+                rate_limit_fehlschlag($ratePdo, $rateKey);
+                $totpErforderlich = true;
+                $fehler = 'Ungültiger 2-Faktor- oder Recovery-Code.';
+            } else {
+                rate_limit_erfolg($ratePdo, $rateKey);
+                unset($_SESSION['pending_2fa']);
+                smu_sitzung_anmelden($userId);
+                if ($recoveryOk) {
+                    smu_hinweis_setzen('warnung',
+                        'Du hast dich mit einem Recovery-Code angemeldet. Verbleibend: '
+                        . recovery_codes_verbleibend($ratePdo, $userId) . '.');
+                }
+                header('Location: /konto');
+                exit;
+            }
+        }
+
+    } else {
+        // --- Erster Schritt: E-Mail + Passwort -----------------------------------
+        $stmt = smu_db()->prepare(
+            'SELECT id, passwort_hash, aktiv, totp_aktiviert
+             FROM users WHERE email_blind_index = :bi'
+        );
+        $stmt->execute([':bi' => smu_blind_index($email)]);
+        $zeile = $stmt->fetch();
+
+        // Timing-konstant: immer einen ECHTEN Argon2id-Vergleich (gültiger Dummy).
         $dummyHash = '$argon2id$v=19$m=65536,t=4,p=1$MDEyMzQ1Njc4OWFiY2RlZg$MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY';
         $hashZuPruefen = ($zeile !== false) ? (string) $zeile['passwort_hash'] : $dummyHash;
-        $passwortKorrekt = password_verify($passwort, $hashZuPruefen);
 
-        if ($zeile === false || !$passwortKorrekt) {
+        if ($zeile === false || !password_verify($passwort, $hashZuPruefen)) {
             rate_limit_fehlschlag($ratePdo, $rateKey);
             $fehler = 'E-Mail oder Passwort ungültig.';
         } elseif ((int) $zeile['aktiv'] !== 1) {
             $fehler = 'Dieses Konto ist deaktiviert.';
         } elseif ((int) $zeile['totp_aktiviert'] === 1) {
-            // 2FA aktiv — Code prüfen
-            if ($totpCode === '') {
-                $totpErforderlich = true;
-                $fehler = '';
-            } else {
-                $secret = smu_entschluesseln((string) $zeile['totp_secret_enc'], 'users.totp_secret_enc');
-                if (!totp_code_pruefen($secret, $totpCode)) {
-                    rate_limit_fehlschlag($ratePdo, $rateKey);
-                    $totpErforderlich = true;
-                    $fehler = 'Ungültiger 2-Faktor-Code.';
-                } else {
-                    rate_limit_erfolg($ratePdo, $rateKey);
-                    smu_sitzung_anmelden((int) $zeile['id']);
-                    header('Location: /konto');
-                    exit;
-                }
-            }
+            // Passwort ok → zweiten Faktor verlangen (Passwort NICHT erneut nötig).
+            $_SESSION['pending_2fa'] = ['user_id' => (int) $zeile['id'], 'zeit' => time()];
+            $totpErforderlich = true;
         } else {
             rate_limit_erfolg($ratePdo, $rateKey);
             smu_sitzung_anmelden((int) $zeile['id']);
@@ -133,13 +159,14 @@ layout_kopf('Anmelden', false);
                    autocomplete="current-password" required>
         </div>
         <?php else: ?>
-        <input type="hidden" name="email" value="<?= htmlspecialchars($eingabeEmail, ENT_QUOTES) ?>">
-        <input type="hidden" name="passwort" value="">
         <div class="formular-gruppe">
             <label for="totp_code">2-Faktor-Code</label>
-            <input type="number" id="totp_code" name="totp_code"
-                   placeholder="6-stelliger Code" maxlength="6"
-                   autocomplete="one-time-code" autofocus>
+            <input type="text" id="totp_code" name="totp_code"
+                   placeholder="6-stelliger Code oder Recovery-Code" inputmode="text"
+                   autocomplete="one-time-code" autofocus required>
+            <span class="feld-hinweis" style="font-size:12px;color:var(--text-45);">
+                Authenticator-App verloren? Gib einen deiner Recovery-Codes ein.
+            </span>
         </div>
         <?php endif; ?>
 

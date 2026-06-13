@@ -25,6 +25,7 @@ require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/totp.php';
 require_once __DIR__ . '/jwt.php';
 require_once __DIR__ . '/rate_limit.php';
+require_once __DIR__ . '/recovery.php';
 
 /**
  * Gültig aufgebauter Argon2id-Dummy-Hash: Bei unbekannter E-Mail wird dagegen
@@ -100,9 +101,11 @@ if ((int) $benutzer['totp_aktiviert'] === 1) {
 
     $secretBase32 = krypto_entschluesseln((string) $benutzer['totp_secret_enc'], 'users.totp_secret_enc');
 
-    if (!totp_code_pruefen($secretBase32, $totpCode)) {
+    // Gültig ist der TOTP-Code ODER ein ungenutzter Recovery-Code.
+    $totpOk = totp_code_pruefen($secretBase32, $totpCode);
+    if (!$totpOk && !recovery_code_einloesen($pdo, (int) $benutzer['id'], $totpCode)) {
         rate_limit_fehlschlag($pdo, $rateKey);
-        antwort_fehler(401, '2fa_falsch', 'Der Zwei-Faktor-Code ist ungültig oder abgelaufen.');
+        antwort_fehler(401, '2fa_falsch', 'Der Zwei-Faktor- oder Recovery-Code ist ungültig oder abgelaufen.');
     }
 }
 

@@ -16,6 +16,7 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/totp.php';
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/recovery.php';
 
 eingabe_methode_erzwingen('POST');
 $nutzdaten = auth_erzwingen();
@@ -58,4 +59,10 @@ if (!totp_code_pruefen($secretBase32, $code)) {
 $aktualisieren = $pdo->prepare('UPDATE users SET totp_aktiviert = 1 WHERE id = :id');
 $aktualisieren->execute(['id' => $userId]);
 
-antwort_ok(['aktiviert' => true]);
+// --- 5. Recovery-Codes erzeugen (einmalig im Response, danach nur als Hash) -------------
+$recoveryCodes = recovery_codes_erzeugen($pdo, $userId);
+
+antwort_ok([
+    'aktiviert'       => true,
+    'recovery_codes'  => $recoveryCodes,
+]);
