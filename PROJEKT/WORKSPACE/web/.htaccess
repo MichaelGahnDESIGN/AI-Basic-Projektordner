@@ -7,6 +7,10 @@ SetEnv SMU_CONFIG_PFAD /www/htdocs/w021b1e1/smu-konfiguration/config.php
 # URL-Routing: /anmelden → /anmelden.php usw.
 RewriteEngine On
 
+# Interne Verzeichnisse hart sperren (VOR der -f-Regel, sonst wirkungslos).
+# FilesMatch greift nur auf Basenamen — daher hier per RewriteRule auf Pfad.
+RewriteRule ^(includes|migration)/ - [F,L]
+
 # Existierende Dateien/Ordner direkt ausliefern (assets/, api/).
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

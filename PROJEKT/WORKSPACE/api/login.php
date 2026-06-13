@@ -24,6 +24,7 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/totp.php';
 require_once __DIR__ . '/jwt.php';
+require_once __DIR__ . '/rate_limit.php';
 
 /**
  * Gültig aufgebauter Argon2id-Dummy-Hash: Bei unbekannter E-Mail wird dagegen
@@ -48,6 +49,16 @@ if ($email === null || $passwort === '') {
 
 // --- 2. Konto über den Blind-Index suchen ---------------------------------------
 $pdo = db_verbindung();
+
+// Brute-Force-Schutz: pro IP zählen, nach Grenze temporär sperren.
+$rateKey = rate_limit_schluessel('api-login', (string) ($_SERVER['REMOTE_ADDR'] ?? ''));
+$wartenSek = rate_limit_gesperrt($pdo, $rateKey);
+if ($wartenSek > 0) {
+    header('Retry-After: ' . $wartenSek);
+    antwort_fehler(429, 'zu_viele_versuche',
+        'Zu viele Anmeldeversuche. Bitte in etwa ' . (int) ceil($wartenSek / 60) . ' Minuten erneut versuchen.');
+}
+
 $abfrage = $pdo->prepare(
     'SELECT id, benutzername, sprache, rolle, aktiv, passwort_hash,
             totp_secret_enc, totp_aktiviert
@@ -60,10 +71,12 @@ $benutzer = $abfrage->fetch();
 // --- 3. Passwort prüfen (mit Timing-Ausgleich) ----------------------------------
 if ($benutzer === false) {
     password_verify($passwort, LOGIN_TIMING_DUMMY_HASH);
+    rate_limit_fehlschlag($pdo, $rateKey);
     antwort_fehler(401, 'anmeldung_fehlgeschlagen', 'E-Mail-Adresse oder Passwort ist falsch.');
 }
 
 if (!password_verify($passwort, (string) $benutzer['passwort_hash'])) {
+    rate_limit_fehlschlag($pdo, $rateKey);
     antwort_fehler(401, 'anmeldung_fehlgeschlagen', 'E-Mail-Adresse oder Passwort ist falsch.');
 }
 
@@ -88,9 +101,13 @@ if ((int) $benutzer['totp_aktiviert'] === 1) {
     $secretBase32 = krypto_entschluesseln((string) $benutzer['totp_secret_enc'], 'users.totp_secret_enc');
 
     if (!totp_code_pruefen($secretBase32, $totpCode)) {
+        rate_limit_fehlschlag($pdo, $rateKey);
         antwort_fehler(401, '2fa_falsch', 'Der Zwei-Faktor-Code ist ungültig oder abgelaufen.');
     }
 }
+
+// Erfolgreiche Anmeldung → Fehlversuchszähler zurücksetzen.
+rate_limit_erfolg($pdo, $rateKey);
 
 // --- 5. Hash bei geänderten Argon2id-Parametern transparent erneuern -------------
 $argonOptionen = konfiguration()['argon2_optionen'] ?? [];

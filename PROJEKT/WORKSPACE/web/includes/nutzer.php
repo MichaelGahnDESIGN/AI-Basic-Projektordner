@@ -46,14 +46,28 @@ function nutzer_profil_laden(int $userId): ?array
 }
 
 /**
+ * Normalisiert den Krypto-Kontext auf das API-Schema 'users.<spalte>'.
+ *
+ * Der Kontext ist als AAD an die AES-256-GCM-Verschlüsselung gebunden; er MUSS
+ * exakt mit dem der API/App übereinstimmen, sonst schlägt die Entschlüsselung
+ * fehl ("Tag ungültig"). Die API nutzt durchgängig 'users.email_enc' usw.
+ */
+function smu_krypto_kontext(string $kontext): string
+{
+    return str_starts_with($kontext, 'users.') ? $kontext : 'users.' . $kontext;
+}
+
+/**
  * Entschlüsselt einen verschlüsselten DB-Wert.
  * Wrapper um krypto_entschluesseln() aus der API.
  */
 function smu_entschluesseln(string $chiffretext, string $kontext): string
 {
     try {
-        return krypto_entschluesseln($chiffretext, $kontext);
-    } catch (Throwable) {
+        return krypto_entschluesseln($chiffretext, smu_krypto_kontext($kontext));
+    } catch (Throwable $e) {
+        // Stumm '' zurückgeben (UI bleibt nutzbar), aber Fehler protokollieren
+        error_log('SMU: Entschlüsselung fehlgeschlagen (Kontext ' . $kontext . '): ' . $e->getMessage());
         return '';
     }
 }
@@ -64,7 +78,7 @@ function smu_entschluesseln(string $chiffretext, string $kontext): string
  */
 function smu_verschluesseln(string $klartext, string $kontext): string
 {
-    return krypto_verschluesseln($klartext, $kontext);
+    return krypto_verschluesseln($klartext, smu_krypto_kontext($kontext));
 }
 
 /**

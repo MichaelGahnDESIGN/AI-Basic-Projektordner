@@ -17,6 +17,7 @@ require_once __DIR__ . '/includes/sitzung.php';
 require_once __DIR__ . '/includes/csrf.php';
 require_once __DIR__ . '/includes/nutzer.php';
 require_once SMU_API_PFAD . '/totp.php';
+require_once SMU_API_PFAD . '/rate_limit.php';
 
 smu_sitzung_starten();
 
@@ -37,45 +38,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $totpCode = trim((string) ($_POST['totp_code'] ?? ''));
     $eingabeEmail = $email;
 
-    // Blind-Index für E-Mail-Suche
-    $blindIdx = smu_blind_index($email);
+    // Brute-Force-Schutz: pro IP zählen, nach Grenze temporär sperren.
+    $ratePdo = smu_db();
+    $rateKey = rate_limit_schluessel('web-login', (string) ($_SERVER['REMOTE_ADDR'] ?? ''));
+    $wartenSek = rate_limit_gesperrt($ratePdo, $rateKey);
 
-    $stmt = smu_db()->prepare(
-        'SELECT id, passwort_hash, aktiv, totp_secret_enc, totp_aktiviert
-         FROM users WHERE email_blind_index = :bi'
-    );
-    $stmt->execute([':bi' => $blindIdx]);
-    $zeile = $stmt->fetch();
-
-    // Timing-konstant: immer einen Hash-Vergleich durchführen
-    $dummyHash = '$argon2id$v=19$m=65536,t=4,p=1$dummy$dummy';
-    $hashZuPruefen = ($zeile !== false) ? (string) $zeile['passwort_hash'] : $dummyHash;
-    $passwortKorrekt = password_verify($passwort, $hashZuPruefen);
-
-    if ($zeile === false || !$passwortKorrekt) {
-        $fehler = 'E-Mail oder Passwort ungültig.';
-    } elseif ((int) $zeile['aktiv'] !== 1) {
-        $fehler = 'Dieses Konto ist deaktiviert.';
-    } elseif ((int) $zeile['totp_aktiviert'] === 1) {
-        // 2FA aktiv — Code prüfen
-        if ($totpCode === '') {
-            $totpErforderlich = true;
-            $fehler = '';
-        } else {
-            $secret = smu_entschluesseln((string) $zeile['totp_secret_enc'], 'totp_secret_enc');
-            if (!totp_code_pruefen($secret, $totpCode)) {
-                $totpErforderlich = true;
-                $fehler = 'Ungültiger 2-Faktor-Code.';
-            } else {
-                smu_sitzung_anmelden((int) $zeile['id']);
-                header('Location: /konto');
-                exit;
-            }
-        }
+    if ($wartenSek > 0) {
+        $fehler = 'Zu viele Anmeldeversuche. Bitte in etwa '
+            . (int) ceil($wartenSek / 60) . ' Minuten erneut versuchen.';
+        // Bei aktiver 2FA-Eingabe das Formular im 2FA-Zustand halten.
+        $totpErforderlich = $totpCode !== '' || $passwort === '';
     } else {
-        smu_sitzung_anmelden((int) $zeile['id']);
-        header('Location: /konto');
-        exit;
+        // Blind-Index für E-Mail-Suche
+        $blindIdx = smu_blind_index($email);
+
+        $stmt = smu_db()->prepare(
+            'SELECT id, passwort_hash, aktiv, totp_secret_enc, totp_aktiviert
+             FROM users WHERE email_blind_index = :bi'
+        );
+        $stmt->execute([':bi' => $blindIdx]);
+        $zeile = $stmt->fetch();
+
+        // Timing-konstant: immer einen ECHTEN Argon2id-Vergleich durchführen.
+        // Der Dummy muss ein gültiger Argon2id-Hash sein, sonst kehrt
+        // password_verify() sofort zurück → Antwortzeit verrät existierende Konten.
+        $dummyHash = '$argon2id$v=19$m=65536,t=4,p=1$MDEyMzQ1Njc4OWFiY2RlZg$MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY';
+        $hashZuPruefen = ($zeile !== false) ? (string) $zeile['passwort_hash'] : $dummyHash;
+        $passwortKorrekt = password_verify($passwort, $hashZuPruefen);
+
+        if ($zeile === false || !$passwortKorrekt) {
+            rate_limit_fehlschlag($ratePdo, $rateKey);
+            $fehler = 'E-Mail oder Passwort ungültig.';
+        } elseif ((int) $zeile['aktiv'] !== 1) {
+            $fehler = 'Dieses Konto ist deaktiviert.';
+        } elseif ((int) $zeile['totp_aktiviert'] === 1) {
+            // 2FA aktiv — Code prüfen
+            if ($totpCode === '') {
+                $totpErforderlich = true;
+                $fehler = '';
+            } else {
+                $secret = smu_entschluesseln((string) $zeile['totp_secret_enc'], 'users.totp_secret_enc');
+                if (!totp_code_pruefen($secret, $totpCode)) {
+                    rate_limit_fehlschlag($ratePdo, $rateKey);
+                    $totpErforderlich = true;
+                    $fehler = 'Ungültiger 2-Faktor-Code.';
+                } else {
+                    rate_limit_erfolg($ratePdo, $rateKey);
+                    smu_sitzung_anmelden((int) $zeile['id']);
+                    header('Location: /konto');
+                    exit;
+                }
+            }
+        } else {
+            rate_limit_erfolg($ratePdo, $rateKey);
+            smu_sitzung_anmelden((int) $zeile['id']);
+            header('Location: /konto');
+            exit;
+        }
     }
 }
 

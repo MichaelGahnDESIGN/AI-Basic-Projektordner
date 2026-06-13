@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'UPDATE users SET totp_secret_enc = :enc, totp_aktiviert = 1, aktualisiert_am = NOW()
                  WHERE id = :id'
             )->execute([
-                ':enc' => krypto_verschluesseln($secretRoh, 'totp_secret_enc'),
+                ':enc' => krypto_verschluesseln($secretRoh, 'users.totp_secret_enc'),
                 ':id'  => $userId,
             ]);
 
@@ -142,8 +142,9 @@ layout_kopf('2-Faktor-Auth', true, 'sicherheit');
 
     <div style="display:flex; gap: 24px; align-items: flex-start; margin-bottom: 20px;">
         <div class="qr-bereich">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=<?= urlencode($qrUri) ?>"
-                 alt="QR-Code für Authenticator-App" width="160" height="160">
+            <!-- QR wird LOKAL im Browser erzeugt (Secret geht nicht an Dritte). -->
+            <div id="totp-qr" data-otpauth="<?= htmlspecialchars($qrUri, ENT_QUOTES) ?>"
+                 style="width:176px;height:176px;background:#fff;border-radius:8px;padding:8px"></div>
         </div>
         <div>
             <p style="font-size: 12px; color: var(--text-45); margin-bottom: 8px;">
@@ -167,6 +168,8 @@ layout_kopf('2-Faktor-Auth', true, 'sicherheit');
         <button type="submit" class="btn btn-primaer">2FA aktivieren</button>
     </form>
 </div>
+<script src="/assets/qrcode.min.js"></script>
+<script src="/assets/totp-qr.js"></script>
 <?php endif; ?>
 
 <?php layout_fuss(); ?>
