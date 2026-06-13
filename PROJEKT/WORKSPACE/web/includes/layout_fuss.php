@@ -12,7 +12,10 @@ function layout_fuss(): void
 
 <footer class="seiten-fuss">
     <span>Shape Miner · <a href="https://deluxe.shapeminer.com">Spiel starten</a></span>
-    <span>v0.0.1</span>
+    <span>
+        v0.0.1
+        <button type="button" class="cache-leeren" data-cache-leeren>Cache leeren</button>
+    </span>
 </footer>
 
 </body>

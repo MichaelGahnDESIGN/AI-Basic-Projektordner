@@ -1,6 +1,9 @@
 # Verzeichnislistung deaktivieren.
 Options -Indexes
 
+# Eigene, animierte 404-Seite
+ErrorDocument 404 /404.html
+
 # PHP-Konfiguration außerhalb Webroot.
 SetEnv SMU_CONFIG_PFAD /www/htdocs/w021b1e1/smu-konfiguration/config.php
 

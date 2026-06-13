@@ -20,6 +20,7 @@ require_once __DIR__ . '/validierung.php';
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/jwt.php';
+require_once __DIR__ . '/sperrbegriffe.php';
 
 eingabe_methode_erzwingen('POST');
 $eingabe = eingabe_json();
@@ -94,6 +95,13 @@ foreach ($pruefung->fetchAll() as $vorhanden) {
     if (strcasecmp((string) $vorhanden['benutzername'], $benutzername) === 0) {
         antwort_fehler(409, 'benutzername_vergeben', 'Dieser Benutzername ist bereits vergeben.');
     }
+}
+
+// --- 3b. Benutzername gegen globale Sperrbegriffe prüfen ----------------------
+if (sperrbegriff_verletzt($pdo, $benutzername) !== null) {
+    antwort_fehler(422, 'name_nicht_erlaubt', 'Eingaben sind unvollständig oder ungültig.', [
+        'benutzername' => 'Dieser Name enthält einen nicht erlaubten Begriff.',
+    ]);
 }
 
 // --- 4. Konto und Einwilligungen in einer Transaktion anlegen -----------------

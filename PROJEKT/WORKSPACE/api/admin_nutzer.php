@@ -32,6 +32,7 @@ require_once __DIR__ . '/eingabe.php';
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/mail.php';
+require_once __DIR__ . '/sperrbegriffe.php';
 
 eingabe_methode_erzwingen('POST');
 $eingabe = eingabe_json();
@@ -254,6 +255,41 @@ switch ($aktion) {
         // Kaskadiert über FOREIGN KEY ON DELETE CASCADE (Einwilligungen, Tokens …).
         $pdo->prepare('DELETE FROM users WHERE id = :id')->execute([':id' => (int) $ziel['id']]);
         antwort_ok(['id' => (int) $ziel['id'], 'geloescht' => true]);
+
+    // ---- Sperrbegriffe: Liste --------------------------------------------------
+    case 'sperrbegriffe_liste':
+        $zeilen = $pdo->query(
+            'SELECT id, begriff, erstellt_am FROM sperrbegriffe ORDER BY begriff'
+        )->fetchAll();
+        $liste = [];
+        foreach ($zeilen as $z) {
+            $liste[] = [
+                'id'          => (int) $z['id'],
+                'begriff'     => (string) $z['begriff'],
+                'erstellt_am' => (string) $z['erstellt_am'],
+            ];
+        }
+        antwort_ok(['begriffe' => $liste, 'anzahl' => count($liste)]);
+
+    // ---- Sperrbegriffe: hinzufügen ---------------------------------------------
+    case 'sperrbegriff_hinzufuegen':
+        $begriff = sperrbegriff_normalisieren($eingabe['begriff'] ?? null);
+        if ($begriff === null) {
+            antwort_fehler(422, 'validierung_fehlgeschlagen', 'Begriff: 1–100 Zeichen.');
+        }
+        // Doppelte ignorieren (UNIQUE) — idempotent.
+        $pdo->prepare('INSERT IGNORE INTO sperrbegriffe (begriff) VALUES (:b)')
+            ->execute([':b' => $begriff]);
+        antwort_ok(['begriff' => $begriff]);
+
+    // ---- Sperrbegriffe: löschen ------------------------------------------------
+    case 'sperrbegriff_loeschen':
+        $id = (int) ($eingabe['id'] ?? 0);
+        if ($id <= 0) {
+            antwort_fehler(422, 'validierung_fehlgeschlagen', 'Keine gültige ID.');
+        }
+        $pdo->prepare('DELETE FROM sperrbegriffe WHERE id = :id')->execute([':id' => $id]);
+        antwort_ok(['id' => $id, 'geloescht' => true]);
 
     default:
         antwort_fehler(400, 'unbekannte_aktion', 'Unbekannte Aktion.');

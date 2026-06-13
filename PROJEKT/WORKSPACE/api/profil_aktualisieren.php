@@ -17,6 +17,7 @@ require_once __DIR__ . '/validierung.php';
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/sperrbegriffe.php';
 
 eingabe_methode_erzwingen('POST');
 $nutzdaten = auth_erzwingen();
@@ -75,8 +76,13 @@ if ((int) $benutzer['aktiv'] !== 1) {
     antwort_fehler(403, 'konto_gesperrt', 'Dieses Konto ist deaktiviert.');
 }
 
-// --- 3. Eindeutigkeit des neuen Benutzernamens prüfen -------------------------------
+// --- 3. Eindeutigkeit + Sperrbegriffe des neuen Benutzernamens prüfen ----------------
 if ($benutzername !== null) {
+    if (sperrbegriff_verletzt($pdo, $benutzername) !== null) {
+        antwort_fehler(422, 'name_nicht_erlaubt', 'Eingaben sind unvollständig oder ungültig.', [
+            'benutzername' => 'Dieser Name enthält einen nicht erlaubten Begriff.',
+        ]);
+    }
     $pruefung = $pdo->prepare('SELECT id FROM users WHERE benutzername = :benutzername AND id <> :id');
     $pruefung->execute(['benutzername' => $benutzername, 'id' => $userId]);
     if ($pruefung->fetch() !== false) {

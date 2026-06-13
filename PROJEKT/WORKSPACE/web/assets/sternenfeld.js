@@ -104,3 +104,29 @@
   zeichne();
   if (reduziert) zeichne(); // einmal statisch zeichnen
 })();
+
+/* ---- Cache leeren (CSP-konform, ohne Inline-Handler) --------------------- */
+/* Service-Worker abmelden + Cache-Storage löschen + Hard-Reload mit Cache-Bust.*/
+window.smdCacheLeeren = function () {
+    var aufgaben = [];
+    try {
+        if ('serviceWorker' in navigator) {
+            aufgaben.push(navigator.serviceWorker.getRegistrations()
+                .then(function (rs) { return Promise.all((rs || []).map(function (r) { return r.unregister(); })); })
+                .catch(function () {}));
+        }
+        if (window.caches && caches.keys) {
+            aufgaben.push(caches.keys()
+                .then(function (ks) { return Promise.all((ks || []).map(function (k) { return caches.delete(k); })); })
+                .catch(function () {}));
+        }
+    } catch (e) {}
+    return Promise.all(aufgaben).then(function () {
+        location.replace(location.pathname + '?cb=' + Date.now());
+    });
+};
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-cache-leeren]').forEach(function (knopf) {
+        knopf.addEventListener('click', window.smdCacheLeeren);
+    });
+});

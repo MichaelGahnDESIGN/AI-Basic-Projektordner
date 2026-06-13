@@ -382,3 +382,17 @@ body.ohne-sidebar .seiten-fuss {
     background: none;
     border: none;
 }
+
+/* Cache-leeren-Knopf im Seitenfuß */
+.cache-leeren {
+    margin-left: 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: inherit;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font: inherit;
+    cursor: pointer;
+    opacity: 0.75;
+}
+.cache-leeren:hover { opacity: 1; }
