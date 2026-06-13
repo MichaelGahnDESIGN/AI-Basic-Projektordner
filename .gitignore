@@ -10,6 +10,15 @@
 **/.env.*
 !**/.env.example
 
+# Zugangsdaten aller Shape Miner Projekte (FTP/DB/SSH).
+*SMDZ4-u-B-3-Rwo-r-t.md
+
+# Lokale PHP-Konfiguration (enthält Secrets).
+**/config.php
+
+# Migrationsskript enthält DB-Zugangsdaten beider Systeme.
+**/migration/migrieren.php
+
 # Abhängigkeiten und Build-Ausgaben werden reproduzierbar erzeugt.
 node_modules/
 **/node_modules/

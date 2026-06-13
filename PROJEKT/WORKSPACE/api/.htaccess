@@ -1,0 +1,23 @@
+# Verzeichnislistung deaktivieren.
+Options -Indexes
+
+# Authorization-Header an PHP weitergeben (FastCGI/FPM-kompatibel).
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+# Alle PHP-Dateien standardmäßig sperren.
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+
+# Nur die öffentlichen API-Endpunkte freischalten.
+<FilesMatch "^(register|login|me|profil_aktualisieren|email_aendern|passwort_aendern|konto_loeschen|zwei_faktor_status|zwei_faktor_start|zwei_faktor_aktivieren|zwei_faktor_deaktivieren)\.php$">
+    Require all granted
+</FilesMatch>
+
+# Schema-, Dokumentations- und Git-Dateien sperren.
+<FilesMatch "\.(sql|md|gitignore)$">
+    Require all denied
+</FilesMatch>
+
+# Pfad zur Konfigurationsdatei außerhalb des Webroots.
+SetEnv SMU_CONFIG_PFAD /www/htdocs/w021b1e1/smu-konfiguration/config.php

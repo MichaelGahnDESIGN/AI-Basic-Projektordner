@@ -1,0 +1,33 @@
+# Verzeichnislistung deaktivieren.
+Options -Indexes
+
+# PHP-Konfiguration außerhalb Webroot.
+SetEnv SMU_CONFIG_PFAD /www/htdocs/w021b1e1/smu-konfiguration/config.php
+
+# URL-Routing: /anmelden → /anmelden.php usw.
+RewriteEngine On
+
+# Existierende Dateien/Ordner direkt ausliefern (assets/, api/).
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Konto-Unterseiten: /konto/profil → konto/profil.php
+RewriteRule ^konto/([a-z]+)/?$ konto/$1.php [L]
+
+# Konto-Übersicht: /konto
+RewriteRule ^konto/?$ konto/index.php [L]
+
+# Einfache Routen: /anmelden, /registrieren, /abmelden
+RewriteRule ^([a-z]+)/?$ $1.php [L]
+
+# Root → index.php
+RewriteRule ^$ index.php [L]
+
+# Sensitive Dateien sperren.
+<FilesMatch "\.(sql|md|gitignore|sample)$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "^(includes|migration)/.*\.php$">
+    Require all denied
+</FilesMatch>
