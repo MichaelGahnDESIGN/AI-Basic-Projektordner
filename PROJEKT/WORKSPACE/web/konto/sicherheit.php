@@ -20,8 +20,8 @@ require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/nutzer.php';
 require_once __DIR__ . '/../includes/layout_kopf.php';
 require_once __DIR__ . '/../includes/layout_fuss.php';
-require_once __DIR__ . '/../../api/totp.php';
-require_once __DIR__ . '/../../api/crypto.php';
+require_once SMU_API_PFAD . '/totp.php';
+require_once SMU_API_PFAD . '/crypto.php';
 
 smu_sitzung_starten();
 smu_einloggen_erforderlich();

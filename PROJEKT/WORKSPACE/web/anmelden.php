@@ -16,7 +16,7 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/sitzung.php';
 require_once __DIR__ . '/includes/csrf.php';
 require_once __DIR__ . '/includes/nutzer.php';
-require_once __DIR__ . '/../../api/totp.php';
+require_once SMU_API_PFAD . '/totp.php';
 
 smu_sitzung_starten();
 

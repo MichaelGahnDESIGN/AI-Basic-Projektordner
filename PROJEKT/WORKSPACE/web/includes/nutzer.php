@@ -9,7 +9,7 @@ declare(strict_types=1);
  */
 
 require_once __DIR__ . '/db.php';
-require_once __DIR__ . '/../../api/crypto.php';
+require_once SMU_API_PFAD . '/crypto.php';
 
 /**
  * Lädt das vollständige Profil eines Nutzers (mit entschlüsselter PII).

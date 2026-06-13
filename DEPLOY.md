@@ -33,21 +33,24 @@ Keine automatisierten Tests. Nach Deploy manuell prüfen (siehe Verify).
    scp /lokaler/pfad/config.php w021b1e1@w021b1e1.kasserver.com:/www/htdocs/w021b1e1/smu-konfiguration/
    ```
 
-**API deployen (`api/`):**
+**API deployen (`api/` → Unterordner des Webroots, HTTP-zugänglich als /api/):**
 ```
 lftp ftp.kasserver.com -u w021b1e1,PASSWORT -e "
-  mirror -R PROJEKT/WORKSPACE/api/ /www/htdocs/w021b1e1/smu-api/;
-  chmod -R 755 /www/htdocs/w021b1e1/smu-api/;
+  mirror -R PROJEKT/WORKSPACE/api/ /www/htdocs/w021b1e1/login.shapeminer.com/api/;
+  chmod -R 755 /www/htdocs/w021b1e1/login.shapeminer.com/api/;
   bye"
 ```
 
-**Web-UI deployen (`web/`):**
+**Web-UI deployen (`web/` → Webroot direkt):**
 ```
 lftp ftp.kasserver.com -u w021b1e1,PASSWORT -e "
-  mirror -R PROJEKT/WORKSPACE/web/ /www/htdocs/w021b1e1/;
-  chmod -R 755 /www/htdocs/w021b1e1/;
+  mirror -R PROJEKT/WORKSPACE/web/ /www/htdocs/w021b1e1/login.shapeminer.com/;
+  chmod -R 755 /www/htdocs/w021b1e1/login.shapeminer.com/;
   bye"
 ```
+
+Hinweis: `web/` und `api/` landen nebeneinander — `api/` als Unterordner des Webroots.
+`SMU_API_PFAD` in `konfiguration_laden.php` erkennt dies automatisch.
 
 **Nicht deployen:** `migration/migrieren.php` (gitignoriert, nur lokaler Trockenrun).
 
