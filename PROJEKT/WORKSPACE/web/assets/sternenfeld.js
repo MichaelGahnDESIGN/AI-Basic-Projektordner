@@ -52,11 +52,11 @@
     for (var i = 0; i < ANZAHL; i++) sterne.push(neu({}));
   }
 
-  var tempo = reduziert ? 0 : 0.012;
+  var tempo = reduziert ? 0 : 0.0034;
 
   function zeichne() {
-    // Leichtes Nachleuchten für weiche, aber nicht zu lange Schweife.
-    ctx.fillStyle = 'rgba(5,6,14,0.42)';
+    // Stärkeres Nachleuchten = kurze, ruhige Schweife (kein hektischer Warp).
+    ctx.fillStyle = 'rgba(5,6,14,0.30)';
     ctx.fillRect(0, 0, w, h);
 
     for (var i = 0; i < sterne.length; i++) {
