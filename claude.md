@@ -1,16 +1,21 @@
 # Claude Start
 
-Diese Datei ist der Root-Einstieg für Claude Code und Claude Cowork.
+Diese Datei ist die menschenfreundliche Claude-Erklärung.
+
+Claude Code erkennt automatisch die Root-Datei `CLAUDE.md`. Diese Datei
+importiert `AGENTS.md` und verweist auf diesen Einstieg, damit Claude und Codex
+mit möglichst wenig doppelter Logik arbeiten.
 
 ## Lies Zuerst
 
-1. `index.md`
-2. `DOKUMENTATION/Informationen/Start_und_Orientierung.md`
-3. `VORLAGE/REGELN/GRUNDREGELN.md`
-4. `VORLAGE/AI/PROJEKTREGELN/PROJEKTREGELN.md`
-5. `VORLAGE/AI/AGENTEN/AGENTS.md`
-6. `VORLAGE/AI/SKILLS/SKILL.md`
-7. `DOKUMENTATION/SKILL.md`
+1. `CLAUDE.md`
+2. `index.md`
+3. `DOKUMENTATION/Informationen/Start_und_Orientierung.md`
+4. `VORLAGE/REGELN/GRUNDREGELN.md`
+5. `VORLAGE/AI/PROJEKTREGELN/PROJEKTREGELN.md`
+6. `VORLAGE/AI/AGENTEN/AGENTS.md`
+7. `VORLAGE/AI/SKILLS/SKILL.md`
+8. `DOKUMENTATION/SKILL.md`
 
 ## Arbeitsorte
 
@@ -24,8 +29,9 @@ Diese Datei ist der Root-Einstieg für Claude Code und Claude Cowork.
 
 - Nutze `.claude/` nur als lokalen Tool-Adapter.
 - Erzeuge keine neuen Root-Dateien, außer der Mensch fordert es ausdrücklich.
-- Für GitHub bleiben `README.md`, `LICENSE`, `CHANGELOG.md` und `VERSION` im
-  Root erlaubt.
+- Für GitHub und Tool-Kompatibilität bleiben `README.md`, `LICENSE`,
+  `CHANGELOG.md`, `VERSION`, `SECURITY.md`, `CLAUDE.md`, `claude.md`,
+  `AGENTS.md` und `index.md` im Root erlaubt.
 - Dokumentiere wichtige Entscheidungen auf Deutsch in `DOKUMENTATION/`.
 - Überschreibe keine fremden Änderungen.
 - Gib keine Secrets, Tokens oder personenbezogenen Daten aus.

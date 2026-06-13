@@ -97,3 +97,45 @@ Jeder Eintrag soll mindestens enthalten:
 - Folgen oder Trade-offs: Der Root enthält nun bewusst einige öffentliche
   GitHub-Dateien. Die allgemeine Aufräumregel bleibt erhalten: Weitere
   Root-Dateien brauchen einen dokumentierten Grund.
+
+## 2026-06-07 - Claude-Code-Kompatibilität und Sicherheitsrichtlinie ergänzt
+
+- Datum: `2026-06-07`
+- Entscheidung: Die Vorlage erhält zusätzlich `CLAUDE.md` als automatisch
+  erkennbaren Claude-Code-Einstieg und `SECURITY.md` als öffentliche
+  Sicherheitsrichtlinie.
+- Begründung: Claude Code arbeitet zuverlässig mit `CLAUDE.md`. Durch den
+  Import von `AGENTS.md` bleibt die gemeinsame Agentenlogik dennoch gebündelt.
+  `SECURITY.md` macht den Sicherheitsfokus für GitHub-Nutzer sofort sichtbar.
+- Betroffene Bereiche: Root-Dateien, README, GitHub-Workflow,
+  Dokumentationsgenerator, Start- und Orientierungsdokumentation.
+- Folgen oder Trade-offs: Der Root enthält zwei zusätzliche sichtbare Dateien,
+  die bewusst erlaubt sind. Die Vorlage wird dadurch besser verständlich und
+  kompatibler für Anwender.
+
+## 2026-06-07 - GitHub Wiki veröffentlicht
+
+- Datum: `2026-06-07`
+- Entscheidung: Das GitHub Wiki wurde veröffentlicht und zusätzlich unter
+  `DOKUMENTATION/GitHub-Wiki/` als versionierte Quelle gespiegelt.
+- Begründung: Anwender sollen die Vorlage direkt im GitHub Wiki lesen können,
+  während die Wiki-Inhalte im Hauptrepository nachvollziehbar pflegbar bleiben.
+- Betroffene Bereiche: README, Dokumentation, GitHub Wiki,
+  `DOKUMENTATION/GitHub-Wiki/`.
+- Folgen oder Trade-offs: Das Wiki ist öffentlich nutzbar. Änderungen an
+  Wiki-Inhalten sollten künftig im Repo und im Wiki synchron gehalten werden.
+
+## 2026-06-07 - Phase 1 MCP lokal und dependency-frei umgesetzt
+
+- Datum: `2026-06-07`
+- Entscheidung: Der konkrete Workspace erhält einen lokalen TypeScript/Node.js
+  MCP-Server unter `PROJEKT/WORKSPACE/`, der ohne externe Laufzeitdienste und
+  ohne installierte NPM-Abhängigkeiten startet.
+- Begründung: Die Phase-1-Anforderung ist lokal-first. Auf dem lokalen Volume
+  war eine Paketinstallation unzuverlässig; deshalb nutzt die erste Version den
+  Node-Test-Runner und einen kleinen JSON-RPC/MCP-Server über stdio.
+- Betroffene Bereiche: `PROJEKT/WORKSPACE/src/`,
+  `PROJEKT/WORKSPACE/tests/`, `PROJEKT/WORKSPACE/docs/`.
+- Folgen oder Trade-offs: Der Server bleibt sehr schlank und lokal
+  nachvollziehbar. Später kann das offizielle MCP-SDK ergänzt werden, wenn ein
+  stabiler Paketinstallationsprozess und ein Lockfile vorliegen.

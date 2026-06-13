@@ -11,8 +11,10 @@ Im Root liegen bewusst nur diese sichtbaren Dateien:
 - `LICENSE`: Lizenz der Vorlage.
 - `CHANGELOG.md`: öffentlicher Änderungsverlauf.
 - `VERSION`: aktuelle Vorlagenversion.
+- `SECURITY.md`: Sicherheitsrichtlinie.
 - `index.md`: menschlicher Startpunkt.
-- `claude.md`: Startpunkt für Claude Code und Claude Cowork.
+- `CLAUDE.md`: automatisch erkannter Einstieg für Claude Code.
+- `claude.md`: menschenfreundliche Claude-Erklärung.
 - `AGENTS.md`: Startpunkt für ChatGPT Codex.
 
 Hidden Tool-Ordner wie `.codex/`, `.claude/`, `.agents/` und `.git/` dürfen im
@@ -31,7 +33,7 @@ Root bleiben, weil sie von den jeweiligen Werkzeugen erwartet werden.
 
 1. Diesen Ordner kopieren und passend benennen.
 2. `DOKUMENTATION/Informationen/Start_und_Orientierung.md` lesen.
-3. `AGENTS.md` oder `claude.md` vom verwendeten Tool lesen lassen.
+3. `AGENTS.md`, `CLAUDE.md` oder `claude.md` vom verwendeten Tool lesen lassen.
 4. Projektkontext in
    `VORLAGE/AI/PROJEKTREGELN/ARBEITSKONTEXT.md` ausfüllen.
 5. Freigaben und Grenzen in

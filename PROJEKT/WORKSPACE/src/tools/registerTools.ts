@@ -1,0 +1,21 @@
+import { AgentCommsService } from "./AgentCommsService.ts";
+import { arrayProperty, emptyObjectSchema, requiredStringProperties } from "./schemas.ts";
+import { jsonResult } from "./jsonResult.ts";
+import type { RegisteredTool } from "./toolTypes.ts";
+
+export function registerTools(service: AgentCommsService): RegisteredTool[] {
+  return [
+    { name: "read_context", description: "Liest Projektkontext, aktive Tasks, letzte Logs und offene Blocker.", inputSchema: emptyObjectSchema, handler: async () => jsonResult(await service.readContext()) },
+    { name: "list_tasks", description: "Gibt Aufgaben aus der Queue mit Status, Ziel-Agent und Priorität zurück.", inputSchema: emptyObjectSchema, handler: async () => jsonResult(await service.listTasks()) },
+    { name: "create_task", description: "Erstellt eine neue Aufgabe mit Kontext, Akzeptanzkriterien und Sicherheitsnotiz.", inputSchema: { type: "object", properties: { sender: { type: "string" }, recipient: { type: "string" }, type: { type: "string" }, priority: { type: "string" }, context: { type: "string" }, task: { type: "string" }, acceptanceCriteria: arrayProperty("Akzeptanzkriterien"), safetyNote: { type: "string" } }, required: ["sender", "recipient", "type", "priority", "context", "task", "acceptanceCriteria", "safetyNote"], additionalProperties: true }, handler: async (input) => jsonResult(await service.createTask(input)) },
+    { name: "claim_task", description: "Setzt eine Aufgabe auf IN_PROGRESS und merkt, welcher Agent sie übernommen hat.", inputSchema: requiredStringProperties(["taskId", "agent"]), handler: async (input) => jsonResult(await service.claimTask(input)) },
+    { name: "complete_task", description: "Verschiebt eine Aufgabe nach DONE und ergänzt Ergebnis, Dateien, Tests, Commit oder PR.", inputSchema: { type: "object", properties: { taskId: { type: "string" }, resultNote: { type: "string" }, files: arrayProperty("Geänderte Dateien"), tests: arrayProperty("Ausgeführte Tests"), commit: { type: "string" }, pullRequest: { type: "string" } }, required: ["taskId", "resultNote", "files", "tests"], additionalProperties: true }, handler: async (input) => jsonResult(await service.completeTask(input)) },
+    { name: "append_chat", description: "Fügt eine normale Chat-, Hinweis- oder Frage-Nachricht hinzu.", inputSchema: requiredStringProperties(["sender", "kind", "message"]), handler: async (input) => jsonResult(await service.appendChat(input)) },
+    { name: "add_blocker", description: "Dokumentiert eine Blockade oder Rückfrage.", inputSchema: requiredStringProperties(["reporter", "message"], ["relatedTaskId"]), handler: async (input) => jsonResult(await service.addBlocker(input)) },
+    { name: "resolve_blocker", description: "Markiert eine Blockade als gelöst.", inputSchema: requiredStringProperties(["blockerId", "resolvedBy", "resolutionNote"]), handler: async (input) => jsonResult(await service.resolveBlocker(input)) },
+    { name: "add_decision", description: "Dokumentiert eine dauerhafte Entscheidung.", inputSchema: requiredStringProperties(["author", "title", "rationale"], ["relatedTaskId"]), handler: async (input) => jsonResult(await service.addDecision(input)) },
+    { name: "write_handoff", description: "Schreibt eine klare Übergabe an einen Agenten oder ans Team.", inputSchema: { type: "object", properties: { from: { type: "string" }, to: { type: "string" }, summary: { type: "string" }, nextSteps: arrayProperty("Nächste Schritte"), relatedTaskIds: arrayProperty("Verknüpfte Aufgaben") }, required: ["from", "to", "summary", "nextSteps"], additionalProperties: true }, handler: async (input) => jsonResult(await service.writeHandoff(input)) },
+    { name: "validate_safety", description: "Prüft Inhalte vor dem Schreiben auf riskante Muster wie Secrets, Dumps oder Zugangsdaten.", inputSchema: requiredStringProperties(["content"]), handler: async (input) => jsonResult(await service.validateSafety(input)) },
+    { name: "reset_round", description: "Setzt Queue und DONE nach Abschluss einer Runde zurück und schreibt eine knappe History.", inputSchema: requiredStringProperties(["actor", "summary"]), handler: async (input) => jsonResult(await service.resetRound(input)) }
+  ];
+}

@@ -76,3 +76,37 @@ Startversion dieser Vorlage pro neuem Projekt:
 - Rücknahme oder Wiederherstellung: Über Git-Diff nachvollziehbar. Die
   GitHub-spezifischen Dateien können entfernt werden, wenn die Vorlage nicht
   öffentlich bereitgestellt werden soll.
+
+### Ergänzung zu 1.0.1 - Claude-Code- und Sicherheitsverbesserung
+
+- Datum: `2026-06-07`
+- Version: `1.0.1`
+- Beschreibung: `CLAUDE.md` als automatisch erkannter Claude-Code-Einstieg,
+  `SECURITY.md` als Sicherheitsrichtlinie, das veröffentlichte GitHub Wiki und
+  eine klarere öffentliche Positionierung als KI-Projektordner-Vorlage wurden
+  ergänzt.
+- Begründung: Die Vorlage soll für Anwender praktischer, sicherer und
+  tool-kompatibler sein.
+- Betroffene Bereiche: Root-Dateien, README, GitHub-Workflow,
+  Dokumentationsgenerator, Start- und Orientierungsdokumentation,
+  `DOKUMENTATION/GitHub-Wiki/`.
+- Rücknahme oder Wiederherstellung: Über Git-Diff nachvollziehbar.
+
+## 1.1.0 - Lokales Agenten-Kommunikations-MCP Phase 1
+
+- Datum: `2026-06-07`
+- Version: `1.1.0`
+- Beschreibung: Im Workspace wurde ein lokales MCP-System für Aufgaben, Chat,
+  Blocker, Entscheidungen, Übergaben, Done-Bereich, History und Safety-Check
+  umgesetzt. Die erste Version nutzt dateibasierten Speicher mit
+  `agent_comms.md` und `agent_comms.state.json`.
+- Begründung: Die bewährte `AI_COMMS.md`-Zusammenarbeit aus TINTLING soll als
+  wiederverwendbares lokales Werkzeug für Codex, Claude und weitere Agenten
+  verfügbar werden.
+- Betroffene Bereiche: `PROJEKT/WORKSPACE/src/`,
+  `PROJEKT/WORKSPACE/tests/`, `PROJEKT/WORKSPACE/docs/`,
+  `PROJEKT/WORKSPACE/examples/`.
+- Rücknahme oder Wiederherstellung: Über Git-Diff nachvollziehbar. Da keine
+  externen Dienste und keine installierten Abhängigkeiten verwendet werden,
+  kann die Phase-1-Umsetzung durch Entfernen der Workspace-Dateien rückgängig
+  gemacht werden.

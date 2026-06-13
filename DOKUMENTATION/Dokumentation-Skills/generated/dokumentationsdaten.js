@@ -1,6 +1,6 @@
 window.DOKU_DATA = {
   "schemaVersion": 4,
-  "generatedAt": "2026-06-07T01:42:14+02:00",
+  "generatedAt": "2026-06-07T03:34:58+02:00",
   "projectRoot": ".",
   "documentationRoot": "DOKUMENTATION",
   "tabs": {
@@ -92,15 +92,27 @@ window.DOKU_DATA = {
               "href": "../VERSION"
             },
             {
+              "label": "Security",
+              "technicalName": "SECURITY.md",
+              "description": "Sicherheitsrichtlinie und Meldeweg.",
+              "href": "../SECURITY.md"
+            },
+            {
               "label": "Index",
               "technicalName": "index.md",
               "description": "Menschlicher Überblick und Startanleitung.",
               "href": "../index.md"
             },
             {
-              "label": "Claude",
+              "label": "Claude Code",
+              "technicalName": "CLAUDE.md",
+              "description": "Automatisch erkannter Einstieg für Claude Code.",
+              "href": "../CLAUDE.md"
+            },
+            {
+              "label": "Claude Erklärung",
               "technicalName": "claude.md",
-              "description": "Startpunkt für Claude Code und Claude Cowork.",
+              "description": "Menschenfreundliche Erklärung für Claude Code und Claude Cowork.",
               "href": "../claude.md"
             },
             {
@@ -514,8 +526,8 @@ window.DOKU_DATA = {
             "purpose": "Hier liegt die eigentliche technische Arbeit des neu entstehenden Projekts.",
             "counts": {
               "subareas": 3,
-              "directories": 1,
-              "files": 1
+              "directories": 3,
+              "files": 3
             },
             "primaryLinks": [
               {
@@ -534,10 +546,38 @@ window.DOKU_DATA = {
                 "type": "dir",
                 "children": [
                   {
+                    "name": "docs",
+                    "path": "PROJEKT/WORKSPACE/docs",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs",
+                    "href": "../PROJEKT/WORKSPACE/docs",
+                    "type": "dir"
+                  },
+                  {
+                    "name": "examples",
+                    "path": "PROJEKT/WORKSPACE/examples",
+                    "sourceHref": "../PROJEKT/WORKSPACE/examples",
+                    "href": "../PROJEKT/WORKSPACE/examples",
+                    "type": "dir"
+                  },
+                  {
+                    "name": "package.json",
+                    "path": "PROJEKT/WORKSPACE/package.json",
+                    "sourceHref": "../PROJEKT/WORKSPACE/package.json",
+                    "href": "../PROJEKT/WORKSPACE/package.json",
+                    "type": "file"
+                  },
+                  {
                     "name": "README.md",
                     "path": "PROJEKT/WORKSPACE/README.md",
                     "sourceHref": "../PROJEKT/WORKSPACE/README.md",
                     "href": "../PROJEKT/WORKSPACE/README.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "tsconfig.json",
+                    "path": "PROJEKT/WORKSPACE/tsconfig.json",
+                    "sourceHref": "../PROJEKT/WORKSPACE/tsconfig.json",
+                    "href": "../PROJEKT/WORKSPACE/tsconfig.json",
                     "type": "file"
                   }
                 ]
@@ -550,8 +590,8 @@ window.DOKU_DATA = {
             "purpose": "Hier liegen Entscheidungen, Risiken, Setup, Versionen, Rechtliches und die HTML-Übersicht.",
             "counts": {
               "subareas": 6,
-              "directories": 6,
-              "files": 16
+              "directories": 7,
+              "files": 28
             },
             "primaryLinks": [
               {
@@ -588,6 +628,99 @@ window.DOKU_DATA = {
                     "path": "DOKUMENTATION/Dokumentation-Skills/Uebersicht.md",
                     "sourceHref": "Dokumentation-Skills/Uebersicht.md",
                     "href": "Dokumentation-Skills/Uebersicht.md",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "GitHub-Wiki",
+                "path": "DOKUMENTATION/GitHub-Wiki",
+                "sourceHref": "GitHub-Wiki",
+                "href": "GitHub-Wiki",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "_Sidebar.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/_Sidebar.md",
+                    "sourceHref": "GitHub-Wiki/_Sidebar.md",
+                    "href": "GitHub-Wiki/_Sidebar.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Backups.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Backups.md",
+                    "sourceHref": "GitHub-Wiki/Backups.md",
+                    "href": "GitHub-Wiki/Backups.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Dokumentation-pflegen.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Dokumentation-pflegen.md",
+                    "sourceHref": "GitHub-Wiki/Dokumentation-pflegen.md",
+                    "href": "GitHub-Wiki/Dokumentation-pflegen.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "FAQ.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/FAQ.md",
+                    "sourceHref": "GitHub-Wiki/FAQ.md",
+                    "href": "GitHub-Wiki/FAQ.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Home.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Home.md",
+                    "sourceHref": "GitHub-Wiki/Home.md",
+                    "href": "GitHub-Wiki/Home.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "KI-Agenten.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/KI-Agenten.md",
+                    "sourceHref": "GitHub-Wiki/KI-Agenten.md",
+                    "href": "GitHub-Wiki/KI-Agenten.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "OpenRouter-Demo.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/OpenRouter-Demo.md",
+                    "sourceHref": "GitHub-Wiki/OpenRouter-Demo.md",
+                    "href": "GitHub-Wiki/OpenRouter-Demo.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Ordnerstruktur.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Ordnerstruktur.md",
+                    "sourceHref": "GitHub-Wiki/Ordnerstruktur.md",
+                    "href": "GitHub-Wiki/Ordnerstruktur.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Prompt-Cheatsheet.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Prompt-Cheatsheet.md",
+                    "sourceHref": "GitHub-Wiki/Prompt-Cheatsheet.md",
+                    "href": "GitHub-Wiki/Prompt-Cheatsheet.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Schnellstart.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Schnellstart.md",
+                    "sourceHref": "GitHub-Wiki/Schnellstart.md",
+                    "href": "GitHub-Wiki/Schnellstart.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Sicherheit.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Sicherheit.md",
+                    "sourceHref": "GitHub-Wiki/Sicherheit.md",
+                    "href": "GitHub-Wiki/Sicherheit.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Versionierung-und-Releases.md",
+                    "path": "DOKUMENTATION/GitHub-Wiki/Versionierung-und-Releases.md",
+                    "sourceHref": "GitHub-Wiki/Versionierung-und-Releases.md",
+                    "href": "GitHub-Wiki/Versionierung-und-Releases.md",
                     "type": "file"
                   }
                 ]
@@ -1029,9 +1162,9 @@ window.DOKU_DATA = {
             "subtitle": "Konkrete technische Projektumsetzung",
             "purpose": "Hier liegt das tatsächlich erstellte Projekt mit Code, Assets, Konfigurationen und seiner konkreten technischen Struktur.",
             "counts": {
-              "subareas": 1,
-              "directories": 0,
-              "files": 1
+              "subareas": 5,
+              "directories": 2,
+              "files": 9
             },
             "primaryLinks": [
               {
@@ -1049,10 +1182,84 @@ window.DOKU_DATA = {
             ],
             "detailsTree": [
               {
+                "name": "docs",
+                "path": "PROJEKT/WORKSPACE/docs",
+                "sourceHref": "../PROJEKT/WORKSPACE/docs",
+                "href": "../PROJEKT/WORKSPACE/docs",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "claude_integration.md",
+                    "path": "PROJEKT/WORKSPACE/docs/claude_integration.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/claude_integration.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/claude_integration.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "codex_integration.md",
+                    "path": "PROJEKT/WORKSPACE/docs/codex_integration.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/codex_integration.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/codex_integration.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "konzept.md",
+                    "path": "PROJEKT/WORKSPACE/docs/konzept.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/konzept.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/konzept.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "mcp_tools.md",
+                    "path": "PROJEKT/WORKSPACE/docs/mcp_tools.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/mcp_tools.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/mcp_tools.md",
+                    "type": "file"
+                  },
+                  {
+                    "name": "sicherheitsregeln.md",
+                    "path": "PROJEKT/WORKSPACE/docs/sicherheitsregeln.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/docs/sicherheitsregeln.md",
+                    "href": "../PROJEKT/WORKSPACE/docs/sicherheitsregeln.md",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "examples",
+                "path": "PROJEKT/WORKSPACE/examples",
+                "sourceHref": "../PROJEKT/WORKSPACE/examples",
+                "href": "../PROJEKT/WORKSPACE/examples",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "agent_comms.md",
+                    "path": "PROJEKT/WORKSPACE/examples/agent_comms.md",
+                    "sourceHref": "../PROJEKT/WORKSPACE/examples/agent_comms.md",
+                    "href": "../PROJEKT/WORKSPACE/examples/agent_comms.md",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "package.json",
+                "path": "PROJEKT/WORKSPACE/package.json",
+                "sourceHref": "../PROJEKT/WORKSPACE/package.json",
+                "href": "../PROJEKT/WORKSPACE/package.json",
+                "type": "file"
+              },
+              {
                 "name": "README.md",
                 "path": "PROJEKT/WORKSPACE/README.md",
                 "sourceHref": "../PROJEKT/WORKSPACE/README.md",
                 "href": "../PROJEKT/WORKSPACE/README.md",
+                "type": "file"
+              },
+              {
+                "name": "tsconfig.json",
+                "path": "PROJEKT/WORKSPACE/tsconfig.json",
+                "sourceHref": "../PROJEKT/WORKSPACE/tsconfig.json",
+                "href": "../PROJEKT/WORKSPACE/tsconfig.json",
                 "type": "file"
               }
             ]

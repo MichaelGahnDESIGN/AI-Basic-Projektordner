@@ -182,15 +182,27 @@ def build_dev_folder_overview() -> dict:
                     "href": make_href(PROJEKT_ROOT / "VERSION"),
                 },
                 {
+                    "label": "Security",
+                    "technicalName": "SECURITY.md",
+                    "description": "Sicherheitsrichtlinie und Meldeweg.",
+                    "href": make_href(PROJEKT_ROOT / "SECURITY.md"),
+                },
+                {
                     "label": "Index",
                     "technicalName": "index.md",
                     "description": "Menschlicher Überblick und Startanleitung.",
                     "href": make_href(PROJEKT_ROOT / "index.md"),
                 },
                 {
-                    "label": "Claude",
+                    "label": "Claude Code",
+                    "technicalName": "CLAUDE.md",
+                    "description": "Automatisch erkannter Einstieg für Claude Code.",
+                    "href": make_href(PROJEKT_ROOT / "CLAUDE.md"),
+                },
+                {
+                    "label": "Claude Erklärung",
                     "technicalName": "claude.md",
-                    "description": "Startpunkt für Claude Code und Claude Cowork.",
+                    "description": "Menschenfreundliche Erklärung für Claude Code und Claude Cowork.",
                     "href": make_href(PROJEKT_ROOT / "claude.md"),
                 },
                 {

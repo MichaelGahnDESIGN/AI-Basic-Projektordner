@@ -8,6 +8,10 @@ kopiert und für neue Projekte wiederverwendet zu werden. Menschen sollen sich
 schnell orientieren können, und KI-Agenten sollen klare Startdateien,
 Arbeitsregeln, Skills, Dokumentationsbereiche und Sicherheitsgrenzen finden.
 
+Wichtig: Das ist keine App-, Framework- oder Website-Vorlage. Es ist eine
+neutrale KI-Projektordner-Vorlage, die vor dem eigentlichen Bauen Ordnung,
+Kontext, Dokumentation und Arbeitsregeln bereitstellt.
+
 ## Für Wen Ist Diese Vorlage Gedacht?
 
 - Menschen, die neue Software-, Web-, App-, Automations- oder KI-Projekte
@@ -28,7 +32,10 @@ Arbeitsregeln, Skills, Dokumentationsbereiche und Sicherheitsgrenzen finden.
 - Eine separate OpenRouter-Demo als Beispiel für API-Tests.
 - Sicherheitsregeln für Secrets, personenbezogene Daten, Zahlungen,
   Authentifizierung, Logs und Admin-Funktionen.
-- GitHub-Dateien für Prüfung, Release-Hinweise und öffentliche Nutzung.
+- GitHub-Dateien für Prüfung, Release-Hinweise, Sicherheitsrichtlinie und
+  öffentliche Nutzung.
+- GitHub Wiki mit Schnellstart, Ordnerstruktur, Prompt-Cheatsheet,
+  Sicherheits-, Backup- und Release-Hinweisen.
 
 ## Ordnerstruktur
 
@@ -38,7 +45,9 @@ Arbeitsregeln, Skills, Dokumentationsbereiche und Sicherheitsgrenzen finden.
 ├── LICENSE
 ├── CHANGELOG.md
 ├── VERSION
+├── SECURITY.md
 ├── index.md
+├── CLAUDE.md
 ├── claude.md
 ├── AGENTS.md
 ├── .agents/
@@ -57,8 +66,10 @@ Arbeitsregeln, Skills, Dokumentationsbereiche und Sicherheitsgrenzen finden.
 | Bereich | Zweck |
 | --- | --- |
 | `README.md` | Öffentliche Erklärung für GitHub und Menschen. |
+| `SECURITY.md` | Sicherheitsrichtlinie und Meldeweg. |
 | `index.md` | Kurzer Einstieg in die lokale Vorlage. |
-| `claude.md` | Startanweisung für Claude Code und Claude Cowork. |
+| `CLAUDE.md` | Automatisch erkannter Einstieg für Claude Code. |
+| `claude.md` | Menschenfreundliche Claude-Erklärung. |
 | `AGENTS.md` | Startanweisung für ChatGPT Codex. |
 | `.agents/skills/` | Repo-Skills für Codex-kompatible Arbeitsabläufe. |
 | `.claude/` | Claude-spezifische Adapter und Hilfen. |
@@ -76,7 +87,8 @@ Arbeitsregeln, Skills, Dokumentationsbereiche und Sicherheitsgrenzen finden.
 2. Ordner für dein neues Projekt kopieren.
 3. Projektordner passend umbenennen.
 4. `index.md` lesen.
-5. Je nach Tool zusätzlich `claude.md` oder `AGENTS.md` lesen lassen.
+5. Je nach Tool zusätzlich `CLAUDE.md`, `claude.md` oder `AGENTS.md` lesen
+   lassen.
 6. Projektkontext in `VORLAGE/AI/PROJEKTREGELN/ARBEITSKONTEXT.md` ausfüllen.
 7. Freigaben und Grenzen in
    `VORLAGE/AI/PROJEKTREGELN/FREIGABEN_UND_GRENZEN.md` dokumentieren.
@@ -112,7 +124,7 @@ an, bevor der Arbeitskontext klar ist.
 ```text
 Starte dieses Projekt aus der Vorlage heraus.
 
-Lies claude.md, index.md, VORLAGE/REGELN/GRUNDREGELN.md und
+Lies CLAUDE.md, claude.md, index.md, VORLAGE/REGELN/GRUNDREGELN.md und
 VORLAGE/AI/PROJEKTREGELN/PROJEKTREGELN.md.
 
 Projektidee:
@@ -369,8 +381,10 @@ Codex startet über `AGENTS.md`. Zusätzlich sind die Repo-Skills unter
 
 ### Claude Code Und Claude Cowork
 
-Claude-basierte Werkzeuge starten über `claude.md`. Die Datei verweist auf die
-wichtigsten Regeln, Arbeitsorte und Dokumentationspflichten.
+Claude Code erkennt `CLAUDE.md` automatisch. Diese Datei importiert `AGENTS.md`
+und verweist zusätzlich auf `claude.md`, damit die gemeinsame Agentenlogik nicht
+doppelt gepflegt werden muss. `claude.md` bleibt als menschenfreundliche
+Erklärung erhalten.
 
 ### Gemeinsame Agentenlogik
 
@@ -440,6 +454,19 @@ Diese Vorlage enthält GitHub-Dateien für öffentliche Nutzung:
   Artefakte, generierte Dokumentationsdaten und die OpenRouter-Demo.
 - `.github/release.yml`: Konfiguration für automatisch erzeugte Release Notes.
 - `.github/ISSUE_TEMPLATE/`: einfache Vorlagen für Fehler und Vorschläge.
+- `SECURITY.md`: Sicherheitsrichtlinie und Kontaktweg für Sicherheitsprobleme.
+
+Wiki:
+
+```text
+https://github.com/MichaelGahnDESIGN/AI-Basic-Projektordner/wiki
+```
+
+Versionierte Wiki-Quellen:
+
+```text
+DOKUMENTATION/GitHub-Wiki/
+```
 
 Aktuelle Version:
 

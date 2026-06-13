@@ -11,7 +11,7 @@ Code, Claude Cowork und ChatGPT Codex.
 
 Die wichtigste Idee:
 
-- Im Root liegen nur die Startdateien.
+- Im Root liegen nur die Start-, GitHub-, Sicherheits- und Tool-Dateien.
 - Regeln, Agenten und Skills liegen in `VORLAGE/`.
 - Konkreter Projektcode liegt in `PROJEKT/WORKSPACE/`.
 - Dokumentation liegt in `DOKUMENTATION/`.
@@ -26,8 +26,10 @@ Die wichtigste Idee:
 | `LICENSE` | Menschen und Plattformen | Lizenz der Vorlage. |
 | `CHANGELOG.md` | Menschen und Releases | Öffentlicher Änderungsverlauf. |
 | `VERSION` | Menschen und Automationen | Aktuelle Vorlagenversion. |
+| `SECURITY.md` | Menschen, Teams und Plattformen | Sicherheitsrichtlinie und Meldeweg. |
 | `index.md` | Menschen | Schneller Überblick über die Vorlage. |
-| `claude.md` | Claude Code und Claude Cowork | Arbeitsanweisung für Claude-basierte Werkzeuge. |
+| `CLAUDE.md` | Claude Code | Automatisch erkannter Claude-Code-Einstieg mit Import von `AGENTS.md`. |
+| `claude.md` | Menschen, Claude Code und Claude Cowork | Menschenfreundliche Claude-Erklärung. |
 | `AGENTS.md` | ChatGPT Codex | Automatisch gelesene Codex-Projektanweisung. |
 
 Im Root sollen keine weiteren sichtbaren Dateien entstehen, außer es gibt einen
@@ -49,7 +51,7 @@ bewussten und dokumentierten Grund.
 ## Neues Projekt in 7 Schritten
 
 1. Vorlage kopieren und den Ordner passend benennen.
-2. `index.md` lesen, dann je nach Tool `claude.md` oder `AGENTS.md`.
+2. `index.md` lesen, dann je nach Tool `CLAUDE.md`, `claude.md` oder `AGENTS.md`.
 3. `VORLAGE/AI/PROJEKTREGELN/ARBEITSKONTEXT.md` ausfüllen.
 4. `VORLAGE/AI/PROJEKTREGELN/FREIGABEN_UND_GRENZEN.md` ausfüllen.
 5. Projektcode nur in `PROJEKT/WORKSPACE/` anlegen.
@@ -60,7 +62,11 @@ bewussten und dokumentierten Grund.
 
 ### Claude Code
 
-Claude Code startet über `claude.md`.
+Claude Code startet automatisch über `CLAUDE.md`.
+
+`CLAUDE.md` importiert `AGENTS.md`, damit Claude und Codex dieselbe gemeinsame
+Agentenlogik nutzen. Die Datei `claude.md` bleibt als menschenfreundliche
+Erklärung erhalten.
 
 Danach sind besonders wichtig:
 
@@ -182,7 +188,9 @@ find . -maxdepth 1 -type f \
   ! -name 'LICENSE' \
   ! -name 'CHANGELOG.md' \
   ! -name 'VERSION' \
+  ! -name 'SECURITY.md' \
   ! -name 'index.md' \
+  ! -name 'CLAUDE.md' \
   ! -name 'claude.md' \
   ! -name 'AGENTS.md' \
   ! -name '.*' \

@@ -13,6 +13,8 @@ jobs:
   quality-check:
     name: Vorlage prüfen
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       - name: Repository auschecken
@@ -36,8 +38,10 @@ jobs:
             ! -name 'LICENSE' \
             ! -name 'CHANGELOG.md' \
             ! -name 'VERSION' \
+            ! -name 'SECURITY.md' \
             ! -name 'index.md' \
             ! -name 'claude.md' \
+            ! -name 'CLAUDE.md' \
             ! -name 'AGENTS.md' \
             ! -name '.*' \
             -print)"

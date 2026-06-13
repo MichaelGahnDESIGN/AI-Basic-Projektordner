@@ -1,0 +1,7 @@
+node_modules/
+dist/
+agent_comms.state.json
+*.log
+.env
+.env.*
+!.env.example

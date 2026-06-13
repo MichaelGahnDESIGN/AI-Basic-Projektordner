@@ -32,8 +32,9 @@ Wichtig:
 - Nutze `rg` für Suche.
 - Verwende `git mv` für Strukturänderungen.
 - Erzeuge keine zusätzlichen sichtbaren Root-Dateien ohne dokumentierten Grund.
-- Für GitHub bleiben `README.md`, `LICENSE`, `CHANGELOG.md` und `VERSION` im
-  Root erlaubt.
+- Für GitHub und Tool-Kompatibilität bleiben `README.md`, `LICENSE`,
+  `CHANGELOG.md`, `VERSION`, `SECURITY.md`, `CLAUDE.md`, `claude.md`,
+  `AGENTS.md` und `index.md` im Root erlaubt.
 - Prüfe nach OpenRouter-Änderungen:
 
 ```bash
