@@ -12,6 +12,7 @@
 
 # Zugangsdaten aller Shape Miner Projekte (FTP/DB/SSH).
 *SMDZ4-u-B-3-Rwo-r-t.md
+Sha-peMin_*.md
 
 # Lokale PHP-Konfiguration (enthält Secrets).
 **/config.php
